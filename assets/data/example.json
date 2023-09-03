@@ -1,0 +1,9 @@
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "studentID": "123456",
+    "institutionName": "ABC University",
+    "email": "john.doe@example.com",
+    "password": "password123",
+    "profilePhoto": "profile_image.jpg"
+}
