@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../config/myconfig.dart'; // Importez le fichier config.dart pour les onglets
 
 class MyTabBar extends StatelessWidget {
-  final TabController tabController;
-  final List<MyTab> tabs;
+  TabController tabController;
+  List<MyTab> tabs;
 
-  const MyTabBar({required this.tabController, required this.tabs, super.key});
+  MyTabBar({required this.tabController, required this.tabs, super.key});
 
   @override
   Widget build(BuildContext context) {

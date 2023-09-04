@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'config/myconfig.dart';
 import 'view/myhomepage.dart';
 import 'theme/mytheme.dart';
 
@@ -14,9 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'My Flutter App',
+      title: MyConfig.mainAppTitle,
       theme: MyTheme.whichThemeOptionToUse(ThemeOption.dark),
-      home: MyHomePage(),
+      home:PageView(
+        // Utilisez la liste de pages de MyConfig
+        children: MyConfig.pages,
+      ),
     );
   }
 }
