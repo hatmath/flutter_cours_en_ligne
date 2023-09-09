@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template_a/config/myconfig.dart';
+import '../config/myconfig.dart';
 import '../model/courses_list.dart';
 import 'mycoursedetailsview.dart';
 

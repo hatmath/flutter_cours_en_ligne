@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_project_template_a/view/myhomepage.dart';
+import '../view/myhomepage.dart';
+import '../config/myconfig.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,6 +78,6 @@ class MySplashScreenNextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyHomePage(); // Appelez simplement MyHomePage()
+    return MyConfig.getNextPage(); // Appelez simplement MyHomePage()
   }
 }

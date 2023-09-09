@@ -1,5 +1,5 @@
-name: flutter_project_template_a
-description: Template A pour des projets Flutter.
+name: flutter_cours_en_ligne_v2
+description: Projet Final Flutter, Application de Cours en Ligne.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
