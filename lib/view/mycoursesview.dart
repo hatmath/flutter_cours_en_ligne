@@ -1,11 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template_a/config/myconfig.dart';
-import 'package:flutter_project_template_a/view/mystudentprofileview.dart';
-import 'package:provider/provider.dart';
 import '../model/courses_list.dart';
 import 'mycoursedetailsview.dart';
-import 'myhomepage.dart';
 
 class MyCoursesView extends StatelessWidget {
   const MyCoursesView({Key? key}) : super(key: key);
@@ -16,7 +13,7 @@ class MyCoursesView extends StatelessWidget {
       itemCount: coursesList.length,
       itemBuilder: (context, index) {
         return Hero(
-          tag: "ListTile-Hero-${coursesList[index].code}",
+          tag: "course-${coursesList[index].code}",
           child: Material(
             child: ListTile(
               title: Text(coursesList[index].title),
@@ -30,16 +27,17 @@ class MyCoursesView extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // MyConfig.myTabsObjList[1].content = MyCourseDetailsView(course: coursesList[index]);  
-                // MyConfig.tabController.animateTo(1);   
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return MyCourseDetailsView(course: coursesList[index]);
-                    },
-                  ),
-                );              
+                MyConfig.currentCourse = coursesList[index];
+                MyConfig.tabController.animateTo(1);
+                // ? ... ou on ouvre une page MyCourseDetailsView pour avoir l'effet Hero
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (BuildContext context) {
+                //       return MyCourseDetailsView(course: coursesList[index]);
+                //     },
+                //   ),
+                // );              
               },
             ),
           ),

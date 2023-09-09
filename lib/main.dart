@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'config/myconfig.dart';
-import 'view/myhomepage.dart';
 import 'theme/mytheme.dart';
 
 void main() {

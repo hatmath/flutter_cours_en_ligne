@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template_a/view/mycoursedetailsview.dart';
 import 'dart:convert';
 
 import '../view/mysplashscreen.dart';
 import '../view/myhomepage.dart';
 import '../view/mycoursesview.dart';
 import '../view/mystudentprofileview.dart';
-import 'package:flutter_project_template_a/model/course.dart';
+import '../model/course.dart';
+import '../view/mycoursedetailsview.dart';
+import '../view/mycoursedetailsviewtab.dart';
 
 // MyConfig
-class MyConfig  extends ChangeNotifier {
+class MyConfig {
+
+  static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png-transparent-back.png",code: "");
 
   static late TabController tabController;
-
-  static void initTabController(int length, TickerProvider vsync) {
-    tabController = TabController(length: length, vsync: vsync);
-  }
  
   // Créez un mappage des noms d'icônes
   static final Map<String, IconData> iconMap = {
@@ -29,12 +28,11 @@ class MyConfig  extends ChangeNotifier {
   // Pour la clé icon, mettre le Flutter ID tel que défini sur https://fonts.google.com/icons
   static const String myTabsJsonStr = '''
   [
-    {"icon": "home", "text": "Cours", "contentText": "Bienvenue. Choisisser un cours", "content": "MyCoursesView",  "tabBarTitle": "Cours Tab", "appBarTitle": "Cours", "drawerTitle": "Menu"}, 
+    {"icon": "home", "text": "Cours", "contentText": "Bienvenue. Choisisser un cours", "content": "MyCoursesView",  "tabBarTitle": "Cours en ligne", "appBarTitle": "Cours en ligne", "drawerTitle": "Cours en ligne"}, 
+    {"icon": "description_outlined", "text": "Détail", "contentText": "Détails du dernier cours choisi", "content": "MyCourseDetailsViewTab", "tabBarTitle": "Legend2", "appBarTitle": "Home2", "drawerTitle": "Menu2"}, 
     {"icon": "account_circle_outlined", "text": "Profil", "contentText": "Profil étudiant", "content": "MyStudentProfileView", "tabBarTitle": "Legend3", "appBarTitle": "Home3", "drawerTitle": "Menu3"}   
   ]
   ''';
-
-  // {"icon": "description_outlined", "text": "Détail", "contentText": "Détails du dernier cours choisi", "content": "MyCourseDetailsView", "tabBarTitle": "Legend2", "appBarTitle": "Home2", "drawerTitle": "Menu2"}, 
 
   static List<MyTab> myTabsObjList =
       MyTab.parseTabs(myTabsJsonStr, iconMap);
@@ -73,6 +71,8 @@ class MyConfig  extends ChangeNotifier {
         return MyCoursesView();
       case 'MyCourseDetailsView':
         return MyCourseDetailsView(course: Course.getEmptyCourse());
+      case 'MyCourseDetailsViewTab':
+        return MyCourseDetailsViewTab();
       case 'MyStudentProfileView':
         return MyStudentProfileView();
       default:

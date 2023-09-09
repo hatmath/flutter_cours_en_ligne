@@ -3,10 +3,10 @@ import '../theme/mytheme.dart';
 import '../config/myconfig.dart';
 
 class MyDrawer extends StatelessWidget {
-  TabController tabController;
-  List<MyTab> tabs;
+  final TabController tabController;
+  final List<MyTab> tabs;
 
-  MyDrawer({required this.tabController, required this.tabs, super.key});
+  const MyDrawer({required this.tabController, required this.tabs, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class MyDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: MyGlobalTheme.darkTheme.drawerTheme.shadowColor,
+              color: MyTheme.currentThemeData.drawerTheme.shadowColor,
             ),
             child: Text(
               tabs[tabController.index].drawerTitle ?? 'Not configured yet!',
               style: TextStyle(
-                color: MyGlobalTheme.darkTheme.primaryColorLight,
+                color: MyTheme.currentThemeData.primaryColorLight,
                 fontSize: 24,
               ),
             ),

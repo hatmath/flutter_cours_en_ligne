@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import '../config/myconfig.dart';
 import '../model/course.dart'; // Import your course model
 
 class MyCourseDetailsView extends StatelessWidget {
@@ -12,19 +13,32 @@ class MyCourseDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Cours')), // Ajoutez une app bar
-      body: Center(
-        child: Hero(
-          tag: "MyCourseDetailsView-${course.code}",
+      body:Center(
+      child: Hero(
+        tag: "course-${course.code}",
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 20.0), // Ajoute un espace horizontal sur les côtés
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(course.imagePath, width: 250,),
+              SizedBox(height: 20.0),
+              Image.asset(
+                course.imagePath,
+                width: 250,
+              ),
+              SizedBox(height: 10.0),
               Text(course.code),
+              SizedBox(height: 10.0),
               Text(course.title),
+              SizedBox(height: 10.0),
               Text(course.description),
+              SizedBox(height: 20.0),
             ],
           ),
         ),
       ),
+    ),
     );
   }
 }

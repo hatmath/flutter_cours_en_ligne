@@ -6,10 +6,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
-  TabController tabController;
-  List<MyTab> tabs;
+  final TabController tabController;
+  final List<MyTab> tabs;
 
-  MyAppBar({required this.tabController, required this.tabs, super.key});
+  const MyAppBar({required this.tabController, required this.tabs, super.key});
 
   @override
   Widget build(BuildContext context) {

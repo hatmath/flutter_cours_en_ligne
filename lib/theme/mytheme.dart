@@ -11,6 +11,9 @@ enum ThemeOption {
 
 class MyTheme {
 
+  // Valeur par défault
+  static ThemeData currentThemeData = MyGlobalTheme.darkTheme;
+
   static ThemeData whichThemeOptionToUse(ThemeOption option) {
 
     ThemeData darkThemeData = MyGlobalTheme.darkTheme;
@@ -22,8 +25,6 @@ class MyTheme {
       tabBarTheme: currentTabBarTheme,
     );
     
-    ThemeData currentThemeData;
-
     switch (option) {
       case ThemeOption.dark:
         currentThemeData = darkThemeData;
