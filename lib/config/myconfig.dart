@@ -9,6 +9,16 @@ import '../model/course.dart';
 import '../view/mycoursedetailsview.dart';
 import '../view/mycoursedetailsviewtab.dart';
 
+enum ClassNames {
+  MySplashScreen,
+  MyHomePage,
+  MyCoursesView,
+  MyCourseDetailsView,
+  MyCourseDetailsViewTab,
+  MyStudentProfileView,
+}
+
+
 // MyConfig
 class MyConfig {
 
@@ -65,18 +75,41 @@ class MyConfig {
     }
   }
 
-  static Widget createWidget(String widgetType) {
+  static ClassNames? stringToClassNames(String value) {
+    try {
+      return ClassNames.values.firstWhere((e) => e.toString() == 'ClassNames.$value');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Widget createWidget(ClassNames widgetType) {
     switch (widgetType) {
-      case 'MyCoursesView':
+      case ClassNames.MyCoursesView:
         return MyCoursesView();
-      case 'MyCourseDetailsView':
+      case ClassNames.MyCourseDetailsView:
         return MyCourseDetailsView(course: Course.getEmptyCourse());
-      case 'MyCourseDetailsViewTab':
+      case ClassNames.MyCourseDetailsViewTab:
         return MyCourseDetailsViewTab();
-      case 'MyStudentProfileView':
+      case ClassNames.MyStudentProfileView:
         return MyStudentProfileView();
       default:
-        throw Exception('Unknown widget type: $widgetType');
+        throw Exception('Type de Widget inconnu: $widgetType');
+    }
+  }
+
+  static int getTabIndexForTabController(ClassNames destinationView) {
+    switch (destinationView) {
+      case ClassNames.MyCoursesView:
+        return 0;
+      case ClassNames.MyCourseDetailsView:
+        return -1;
+      case ClassNames.MyCourseDetailsViewTab:
+        return 1;
+      case ClassNames.MyStudentProfileView:
+        return 2;
+      default:
+        throw Exception('Tab index inconnu pour: $destinationView');
     }
   }
 }
@@ -107,7 +140,7 @@ class MyTab {
               icon: MyIcon.createIconFromClassName(json['icon'], iconMap),
               text: json['text'],
               contentText: json['contentText'],
-              content: MyConfig.createWidget(json['content']),
+              content: MyConfig.createWidget(MyConfig.stringToClassNames(json['content'])!),
               tabBarTitle: json['tabBarTitle'],
               appBarTitle: json['appBarTitle'],
               drawerTitle: json['drawerTitle'],

@@ -28,7 +28,7 @@ class MyCoursesView extends StatelessWidget {
               ),
               onTap: () {
                 MyConfig.currentCourse = coursesList[index];
-                MyConfig.tabController.animateTo(1);
+                MyConfig.tabController.animateTo(MyConfig.getTabIndexForTabController(ClassNames.MyCourseDetailsViewTab));
                 // ? ... ou on ouvre une page MyCourseDetailsView pour avoir l'effet Hero
                 // Navigator.push(
                 //   context,
