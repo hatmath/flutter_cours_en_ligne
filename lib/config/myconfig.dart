@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import '../theme/mytheme.dart';
 import '../view/mysplashscreen.dart';
 import '../view/myhomepage.dart';
 import '../view/mycoursesview.dart';
@@ -16,6 +17,10 @@ enum ClassNames {
   MyCourseDetailsView,
   MyCourseDetailsViewTab,
   MyStudentProfileView,
+  MyAppBar,
+  MyDrawer,
+  MyTabBar,
+  MyTabBarView,
 }
 
 
@@ -93,6 +98,17 @@ class MyConfig {
         return MyCourseDetailsViewTab();
       case ClassNames.MyStudentProfileView:
         return MyStudentProfileView();
+      case ClassNames.MyAppBar:
+        return MyAppBar(tabController: MyConfig.tabController, tabs: MyConfig.myTabsObjList);
+      case ClassNames.MyDrawer:
+        return MyDrawer(tabController: MyConfig.tabController, tabs: MyConfig.myTabsObjList);
+      case ClassNames.MyTabBar:
+        return MyTabBar(tabController: MyConfig.tabController, tabs: MyConfig.myTabsObjList); 
+      case ClassNames.MyTabBarView:
+        return TabBarView(
+        controller: MyConfig.tabController,
+        children: MyConfig.myTabsObjList.map((tab) => tab.content).toList(),
+        );       
       default:
         throw Exception('Type de Widget inconnu: $widgetType');
     }
@@ -162,5 +178,89 @@ class MyIcon {
       // Gérez le cas où l'icône n'est pas trouvée
       return const Icon(Icons.error);
     }
+  }
+}
+
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  final TabController tabController;
+  final List<MyTab> tabs;
+
+  const MyAppBar({required this.tabController, required this.tabs, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    
+   return AppBar(
+      title: Text(tabs[tabController.index].appBarTitle ?? 'Not configured yet!'), // Le titre est tjr defini par le premier objet MyTab du tableau tabs[] pour l'instant
+      actions: [
+        for (int index = 0; index < tabs.length; index++)
+          IconButton(
+            icon: tabs[index].icon,
+            onPressed: () {
+              tabController.animateTo(index);
+            },
+          ),
+      ],
+    );
+  }
+}
+
+class MyDrawer extends StatelessWidget {
+  final TabController tabController;
+  final List<MyTab> tabs;
+
+  const MyDrawer({required this.tabController, required this.tabs, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: MyTheme.currentThemeData.drawerTheme.shadowColor,
+            ),
+            child: Text(
+              tabs[tabController.index].drawerTitle ?? 'Not configured yet!',
+              style: TextStyle(
+                color: MyTheme.currentThemeData.primaryColorLight,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          for (int index = 0; index < tabs.length; index++)
+            ListTile(
+              title: Text(tabs[index].text),
+              onTap: () {
+                Navigator.pop(context);
+                tabController.animateTo(index);
+              },
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyTabBar extends StatelessWidget {
+  TabController tabController;
+  List<MyTab> tabs;
+
+  MyTabBar({required this.tabController, required this.tabs, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      controller: tabController,
+      indicatorColor: Colors.blue,
+      labelColor: Colors.blue,
+      tabs: tabs.map((tab) {
+        return Tab(icon: tab.icon, text: tab.text);
+      }).toList(),
+    );
   }
 }

@@ -43,7 +43,7 @@ class MySplashScreenState extends State<MySplashScreen> {
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(seconds: 2),
-        pageBuilder: (_, __, ___) => const MySplashScreenNextPage(),
+        pageBuilder: (_, __, ___) => MyConfig.getNextPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0);
           const end = Offset.zero;
@@ -70,14 +70,5 @@ class MySplashScreenState extends State<MySplashScreen> {
         ),
       ),
     );
-  }
-}
-
-class MySplashScreenNextPage extends StatelessWidget {
-  const MySplashScreenNextPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MyConfig.getNextPage(); // Appelez simplement MyHomePage()
   }
 }
