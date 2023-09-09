@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 
-import '../theme/mytheme.dart';
+import 'mytheme.dart';
 import '../view/mysplashscreen.dart';
 import '../view/myhomepage.dart';
 import '../view/mycoursesview.dart';
@@ -27,7 +28,16 @@ enum ClassNames {
 // MyConfig
 class MyConfig {
 
-  static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png-transparent-back.png",code: "");
+  static Future<List<Course>> loadProduits() async {
+    String produitsJsonFilePath = 'assets/courses.json';
+    String jsonString = await rootBundle.loadString(produitsJsonFilePath);
+    List<dynamic> jsonList = json.decode(jsonString);
+    List<Course> produits =
+        jsonList.map((data) => Course.fromJson(data)).toList();
+    return produits;
+  }
+
+  static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png_transparent.png",code: "");
 
   static late TabController tabController;
  
@@ -182,17 +192,16 @@ class MyIcon {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
   final TabController tabController;
   final List<MyTab> tabs;
 
   const MyAppBar({required this.tabController, required this.tabs, super.key});
+  
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context) {    
    return AppBar(
       title: Text(tabs[tabController.index].appBarTitle ?? 'Not configured yet!'), // Le titre est tjr defini par le premier objet MyTab du tableau tabs[] pour l'instant
       actions: [
@@ -211,9 +220,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 class MyDrawer extends StatelessWidget {
   final TabController tabController;
   final List<MyTab> tabs;
-
+  
   const MyDrawer({required this.tabController, required this.tabs, super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -247,11 +256,11 @@ class MyDrawer extends StatelessWidget {
 }
 
 class MyTabBar extends StatelessWidget {
-  TabController tabController;
-  List<MyTab> tabs;
-
-  MyTabBar({required this.tabController, required this.tabs, super.key});
-
+  final TabController tabController;
+  final List<MyTab> tabs;
+  
+  const MyTabBar({required this.tabController, required this.tabs, super.key});
+  
   @override
   Widget build(BuildContext context) {
     return TabBar(

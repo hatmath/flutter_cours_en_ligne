@@ -13,6 +13,21 @@ class Course {
     required this.code,
   });
 
+  // Constructeur nommé qui accepte un Map<String, dynamic>
+  Course.fromMap(Map<String, dynamic> map)
+      : title = map['title'] ?? '',
+        description = map['description'] ?? '',
+        imagePath = map['imagePath'] ?? 0, 
+        code = map['code'] ?? '';
+
+  factory Course.fromJson(Map<String, dynamic> json) {
+    return Course(
+        title: json['title'],
+        description: json['description'],
+        imagePath: json['imagePath'],
+        code: json['code']);
+  }
+
   @override
   String toString() {
     if (language == "french") {
@@ -27,7 +42,7 @@ class Course {
     return Course(
       title: "",
       description: "",
-      imagePath: "assets/images/png_img_empty_2.png", // Assurez-vous que le chemin est correct
+      imagePath: "assets/images/png_transparent.png", // Assurez-vous que le chemin est correct
       code: ""
     );
   }

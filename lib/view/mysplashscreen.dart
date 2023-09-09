@@ -63,6 +63,8 @@ class MySplashScreenState extends State<MySplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(MyConfig.mainAppTitle),
+            const SizedBox(height: 20),
             Image.asset('assets/images/png_img.png', width: 150),
             const SizedBox(height: 20),
             Image.asset('assets/images/gif_img.gif', width: 150),
