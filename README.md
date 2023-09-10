@@ -24,9 +24,12 @@
 
         Créer une application en utilisant Flutter qui affiche une liste de cours en ligne.
         
-        100% Chaque cours sera représenté par une image et un titre.
+        100% 
+        Chaque cours sera représenté par une image et un titre.
         
-        75% Lorsqu'un cours est sélectionné, une transition en utilisant le widget Hero montrera l'image du cours en plein écran avec le titre et la description du cours en dessous. Un bouton permettant de démarrer le cours cela lancera une transition vers un vidéo du cours. (Vous n’avez pas à intégrer le vidéo)
+        75% la page de détail est présentée dans un tab via un tab controller alors l'Effet Hero n'ai pas possible dans 
+            ce contexte. Voir avec le prof si c'est ok?
+        Lorsqu'un cours est sélectionné, une transition en utilisant le widget Hero montrera l'image du cours en plein écran avec le titre et la description du cours en dessous. Un bouton permettant de démarrer le cours cela lancera une transition vers un vidéo du cours. (Vous n’avez pas à intégrer le vidéo)
        
         L'application comportera également
             • un écran de profil étudiant
@@ -34,11 +37,12 @@
             • un écran de login
             • un écran de création d'utilisateur
         
+        75% Ça fonctionne ainsi mais toute les fonctionnalité ne sont pas encore donc 75% pour l'instant
         Pour faire la transition entre les différents états de l’application vous utiliserez une barre de navigation au bas de l’écran qui comportera un icône représentatif de chaque
     
     TÂCHES :
         
-        ÉTAPE 1 : CRÉATION DE L'ÉCRAN SPLASH (10%)
+        ÉTAPE 1 : CRÉATION DE L'ÉCRAN SPLASH (10%) (100% fait)
 
             100% 1. Créez un écran de splash screen simple avec le titre de l'application ou un icône significatif            
             100% 2. Assurez-vous que l'écran de splash s'affiche au démarrage de l'application pendant 2 secondes avant de passer à l'écran suivant.
@@ -47,7 +51,7 @@
 
             Vous pouvez créer votre splash screen comme étant StatelessWidget de la propriété home de votre materialApp et créer un Future.delayed dans la fonction « initState() » de votre splash, cependant vous pouvez aussi explorer l’ajout de la dépendance « animated_splash_screen » dans votre fichier yalm et définir le splash de cette façon, si vous prennez cette avenue, je veux avoir comme splashTransition : SplashTransition.scaleTransition.
 
-        ÉTAPE 2 : CRÉATION DE L'ÉCRAN DE LISTE DE COURS (10%)
+        ÉTAPE 2 : CRÉATION DE L'ÉCRAN DE LISTE DE COURS (10%) (100% fait)
 
             100% 1. Créez une liste de cours fictifs en utilisant une classe `Cours` avec les attributs : titre, description et chemin d'accès à l'image.
 
@@ -106,3 +110,7 @@
     SOUMISSION :
         
         Remettre le projet au complet compressé dans Léa.
+    
+    PERSONNEL CALCUL DE LA NOTE FINALE
+        (10pt)    10%x100%      Splashscreen
+        (10pt)    10%x100%      écran de liste de cours

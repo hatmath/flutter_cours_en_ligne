@@ -6,6 +6,7 @@ import 'mytheme.dart';
 import '../view/mysplashscreen.dart';
 import '../view/myhomepage.dart';
 import '../view/mycoursesview.dart';
+import '../view/mycoursesviewstore.dart';
 import '../view/mycoursedetailspage.dart';
 import '../view/mycoursedetailsview.dart';
 import '../view/mystudentprofileview.dart';
@@ -15,6 +16,7 @@ enum ClassNames {
   MySplashScreen,
   MyHomePage,
   MyCoursesView,
+  MyCoursesViewStore,
   MyCourseDetailsView,
   MyCourseDetailsPage,
   MyStudentProfileView,
@@ -44,7 +46,7 @@ class MyConfig {
   // Pour la clé icon, mettre le Flutter ID tel que défini sur https://fonts.google.com/icons
   static const String myTabsJsonStr = '''
   [
-    {"icon": "home", "text": "Cours", "contentText": "Bienvenue. Choisisser un cours", "content": "MyCoursesView",  "tabBarTitle": "Cours en ligne", "appBarTitle": "Cours en ligne", "drawerTitle": "Cours en ligne"}, 
+    {"icon": "home", "text": "Cours", "contentText": "Bienvenue. Choisisser un cours", "content": "MyCoursesViewStore",  "tabBarTitle": "Cours en ligne", "appBarTitle": "Cours en ligne", "drawerTitle": "Cours en ligne"}, 
     {"icon": "description_outlined", "text": "Détail", "contentText": "Détails du dernier cours choisi", "content": "MyCourseDetailsView", "tabBarTitle": "Legend2", "appBarTitle": "Home2", "drawerTitle": "Menu2"}, 
     {"icon": "account_circle_outlined", "text": "Profil", "contentText": "Profil étudiant", "content": "MyStudentProfileView", "tabBarTitle": "Legend3", "appBarTitle": "Home3", "drawerTitle": "Menu3"}   
   ]
@@ -93,6 +95,8 @@ class MyConfig {
     switch (widgetType) {
       case ClassNames.MyCoursesView:
         return MyCoursesView();
+      case ClassNames.MyCoursesViewStore:
+        return MyCoursesViewStore();
       case ClassNames.MyCourseDetailsPage:
         return MyCourseDetailsPage(course: Course.getEmptyCourse());
       case ClassNames.MyCourseDetailsView:
@@ -118,6 +122,8 @@ class MyConfig {
   static int getTabIndexForTabController(ClassNames destinationView) {
     switch (destinationView) {
       case ClassNames.MyCoursesView:
+        return 0;
+      case ClassNames.MyCoursesViewStore:
         return 0;
       case ClassNames.MyCourseDetailsPage:
         return -1;
