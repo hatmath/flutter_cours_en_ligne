@@ -11,8 +11,9 @@ class VideoPlayerScreen extends StatefulWidget {
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTickerProviderStateMixin {
   late VideoPlayerController _controller;
+  AnimationController? _fadeController;
 
   @override
   void initState() {
@@ -22,12 +23,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         _controller.play(); // Autoplay when initialized
         setState(() {});
       });
+     _fadeController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..forward();
   }
 
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _fadeController?.dispose();
   }
 
   @override
@@ -36,7 +42,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       appBar: AppBar(
         title: Text("Lecture Vidéo"),
       ),
-      body: Center(
+      body: FadeTransition(
+        opacity: _fadeController!,
+        child: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: 20.0), // espace horizontal sur les côtés
@@ -48,6 +56,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               : CircularProgressIndicator(),
         ),
       ),
+    )
     );
   }
-}
+} 
