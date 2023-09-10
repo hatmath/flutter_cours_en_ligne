@@ -1,65 +1,68 @@
-
 import 'package:flutter/material.dart';
 import '../config/myconfig.dart';
-import '../model/courses_list.dart';
-import 'mycoursedetailsview.dart';
+import '../model/course.dart';
+import 'mycoursedetailspage.dart';
 
 class MyCoursesView extends StatelessWidget {
   const MyCoursesView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: coursesList.length,
-      itemBuilder: (context, index) {
-        return Hero(
-          tag: "course-${coursesList[index].code}",
-          child: Material(
-            child: ListTile(
-              title: Text(coursesList[index].title),
-              contentPadding: const EdgeInsets.all(10),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                child: Image.asset(
-                  coursesList[index].imagePath,
-                  width: 76,
-                  fit: BoxFit.cover,
+    return FutureBuilder<List<Course>>(
+      future: MyConfig.loadProduits(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Center(child: Text("Erreur lors du chargement"));
+          }
+          List<Course> courses = snapshot.data!;
+          return ListView.builder(
+            padding: EdgeInsets.all(20.0),
+            itemExtent: 70.0,
+            itemCount: courses.length,
+            itemBuilder: (context, index) {
+              return Hero(
+                tag: "course-${courses[index].code}",
+                child: Material(
+                  child: ListTile(
+                    title: Text(courses[index].title),
+                    contentPadding: const EdgeInsets.all(10),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      child: MyConfig.getImage(courses[index].imagePath, 76),
+                    ),
+                    onTap: () {
+                      MyConfig.currentCourse = courses[index];
+                      MyConfig.tabController.animateTo(
+                          MyConfig.getTabIndexForTabController(
+                              ClassNames.MyCourseDetailsView));
+                      // ? ... ou on ouvre une page MyCourseDetailsPage pour avoir l'effet Hero mais ça bogue
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) {
+                      //       return MyCourseDetailsPage(course: coursesList[index]);
+                      //     },
+                      //   ),
+                      // );
+                    },
+                  ),
                 ),
-              ),
-              onTap: () {
-                MyConfig.currentCourse = coursesList[index];
-                MyConfig.tabController.animateTo(MyConfig.getTabIndexForTabController(ClassNames.MyCourseDetailsViewTab));
-                // ? ... ou on ouvre une page MyCourseDetailsView pour avoir l'effet Hero
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (BuildContext context) {
-                //       return MyCourseDetailsView(course: coursesList[index]);
-                //     },
-                //   ),
-                // );              
-              },
-            ),
-          ),
-        );
+              );
+            },
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
       },
     );
   }
 }
 
-
-
-
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_project_template_a/config/myconfig.dart';
 // import '../model/courses_list.dart';
 // import 'mycoursedetailsview.dart';
-
 
 // class MyCoursesView extends StatelessWidget {
 
@@ -90,7 +93,7 @@ class MyCoursesView extends StatelessWidget {
 //                 MyConfig.tabController.animateTo(1); // Assurez-vous que 1 est l'index de l'onglet des détails
 //                 // MyConfig.selectedCourseDetails = coursesList[index];
 //                 // MyCourseDetailsView(course: coursesList[index]); // Stockez les détails du cours sélectionné
-//               },  
+//               },
 //             ),
 //           ),
 //         );
@@ -98,9 +101,6 @@ class MyCoursesView extends StatelessWidget {
 //     );
 //   }
 // }
-
-
-
 
 // import 'package:flutter/material.dart';
 // import '../model/courses_list.dart';
@@ -140,7 +140,7 @@ class MyCoursesView extends StatelessWidget {
 //                     },
 //                   ),
 //                 );
-//               },  
+//               },
 //             ),
 //           ),
 //         );
@@ -149,10 +149,8 @@ class MyCoursesView extends StatelessWidget {
 //   }
 // }
 
-
-// Le main est présent seulement pour test que tout fonctionne indépendamment 
+// Le main est présent seulement pour test que tout fonctionne indépendamment
 // void main() => runApp(const MyCoursesView(title: "Test MyCoursesView"));
-
 
 // class MyCoursesView extends StatelessWidget {
 //   final String title;
@@ -233,8 +231,8 @@ class MyCoursesView extends StatelessWidget {
 //                 contentPadding: const EdgeInsets.all(10),
 //                 // tileColor: Colors.cyan,
 //                 tileColor: Colors.blue[700],
-//                 leading: 
-                
+//                 leading:
+
 //                 ClipRRect(
 //                       borderRadius: BorderRadius.all(Radius.circular(4.0)),
 //                       child:Image.asset(
@@ -242,7 +240,7 @@ class MyCoursesView extends StatelessWidget {
 //                   width: 76,
 //                   fit: BoxFit.cover,
 //                 ),),
-                
+
 //                 onTap: () {
 //                   Navigator.push(
 //                     context,
@@ -297,5 +295,3 @@ class MyCoursesView extends StatelessWidget {
 //     ),
 //   ),
 // ),
-
-

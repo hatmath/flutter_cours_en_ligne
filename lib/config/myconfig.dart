@@ -8,15 +8,15 @@ import '../view/myhomepage.dart';
 import '../view/mycoursesview.dart';
 import '../view/mystudentprofileview.dart';
 import '../model/course.dart';
+import '../view/mycoursedetailspage.dart';
 import '../view/mycoursedetailsview.dart';
-import '../view/mycoursedetailsviewtab.dart';
 
 enum ClassNames {
   MySplashScreen,
   MyHomePage,
   MyCoursesView,
   MyCourseDetailsView,
-  MyCourseDetailsViewTab,
+  MyCourseDetailsPage,
   MyStudentProfileView,
   MyAppBar,
   MyDrawer,
@@ -29,7 +29,7 @@ enum ClassNames {
 class MyConfig {
 
   static Future<List<Course>> loadProduits() async {
-    String produitsJsonFilePath = 'assets/courses.json';
+    String produitsJsonFilePath = 'assets/data/courses.json';
     String jsonString = await rootBundle.loadString(produitsJsonFilePath);
     List<dynamic> jsonList = json.decode(jsonString);
     List<Course> produits =
@@ -54,7 +54,7 @@ class MyConfig {
   static const String myTabsJsonStr = '''
   [
     {"icon": "home", "text": "Cours", "contentText": "Bienvenue. Choisisser un cours", "content": "MyCoursesView",  "tabBarTitle": "Cours en ligne", "appBarTitle": "Cours en ligne", "drawerTitle": "Cours en ligne"}, 
-    {"icon": "description_outlined", "text": "Détail", "contentText": "Détails du dernier cours choisi", "content": "MyCourseDetailsViewTab", "tabBarTitle": "Legend2", "appBarTitle": "Home2", "drawerTitle": "Menu2"}, 
+    {"icon": "description_outlined", "text": "Détail", "contentText": "Détails du dernier cours choisi", "content": "MyCourseDetailsView", "tabBarTitle": "Legend2", "appBarTitle": "Home2", "drawerTitle": "Menu2"}, 
     {"icon": "account_circle_outlined", "text": "Profil", "contentText": "Profil étudiant", "content": "MyStudentProfileView", "tabBarTitle": "Legend3", "appBarTitle": "Home3", "drawerTitle": "Menu3"}   
   ]
   ''';
@@ -102,10 +102,10 @@ class MyConfig {
     switch (widgetType) {
       case ClassNames.MyCoursesView:
         return MyCoursesView();
+      case ClassNames.MyCourseDetailsPage:
+        return MyCourseDetailsPage(course: Course.getEmptyCourse());
       case ClassNames.MyCourseDetailsView:
-        return MyCourseDetailsView(course: Course.getEmptyCourse());
-      case ClassNames.MyCourseDetailsViewTab:
-        return MyCourseDetailsViewTab();
+        return MyCourseDetailsView();
       case ClassNames.MyStudentProfileView:
         return MyStudentProfileView();
       case ClassNames.MyAppBar:
@@ -128,15 +128,29 @@ class MyConfig {
     switch (destinationView) {
       case ClassNames.MyCoursesView:
         return 0;
-      case ClassNames.MyCourseDetailsView:
+      case ClassNames.MyCourseDetailsPage:
         return -1;
-      case ClassNames.MyCourseDetailsViewTab:
+      case ClassNames.MyCourseDetailsView:
         return 1;
       case ClassNames.MyStudentProfileView:
         return 2;
       default:
         throw Exception('Tab index inconnu pour: $destinationView');
     }
+  }
+
+  static Image getImage(String imageNameAndPath, double width) {
+    double myWidth = width;
+    Image monImage =
+        Image.asset("assets/images/png_img_empty.png", width: myWidth, fit: BoxFit.cover);
+    if (imageNameAndPath.contains("http")) {
+      monImage =
+          Image.network(imageNameAndPath, width: myWidth, fit: BoxFit.cover);
+    } else if (imageNameAndPath != "") {
+      monImage =
+          Image.asset(imageNameAndPath, width: myWidth, fit: BoxFit.cover);
+    }
+    return monImage;
   }
 }
 
