@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/course.dart';
 import '../config/myconfig.dart';
 
 class MyCourseDetailsView extends StatelessWidget {
@@ -16,11 +15,8 @@ class MyCourseDetailsView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 20.0),             
-              Image.asset(
-                MyConfig.currentCourse.imagePath,
-                width: 250,
-              ),
+              SizedBox(height: 20.0),   
+              MyConfig.getImage(MyConfig.currentCourse.imagePath, 250),          
               SizedBox(height: 10.0),
               Text(MyConfig.currentCourse.code),
               SizedBox(height: 10.0),

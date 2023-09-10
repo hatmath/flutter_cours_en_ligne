@@ -40,7 +40,7 @@ class MyConfig {
   static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png_transparent.png",code: "");
 
   static late TabController tabController;
- 
+
   // Créez un mappage des noms d'icônes
   static final Map<String, IconData> iconMap = {
     'home': Icons.home,
@@ -142,7 +142,7 @@ class MyConfig {
   static Image getImage(String imageNameAndPath, double width) {
     double myWidth = width;
     Image monImage =
-        Image.asset("assets/images/png_img_empty.png", width: myWidth, fit: BoxFit.cover);
+        Image.asset("assets/images/png_transparent.png", width: myWidth, fit: BoxFit.cover);
     if (imageNameAndPath.contains("http")) {
       monImage =
           Image.network(imageNameAndPath, width: myWidth, fit: BoxFit.cover);

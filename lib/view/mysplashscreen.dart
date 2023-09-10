@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../view/myhomepage.dart';
 import '../config/myconfig.dart';
 
 void main() {
@@ -13,9 +12,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: const MySplashScreen(),
     );
   }
@@ -65,9 +61,9 @@ class MySplashScreenState extends State<MySplashScreen> {
           children: [
             Text(MyConfig.mainAppTitle),
             const SizedBox(height: 20),
-            Image.asset('assets/images/png_img.png', width: 150),
+            Image.asset('assets/images/png_splash_img.png', width: 150),
             const SizedBox(height: 20),
-            Image.asset('assets/images/gif_img.gif', width: 150),
+            Image.asset('assets/images/gif_splash_img.gif', width: 150),
           ],
         ),
       ),
