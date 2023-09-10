@@ -6,16 +6,16 @@ class MyCourseDetailsPage extends StatelessWidget {
 
   const MyCourseDetailsPage({required this.course, super.key});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Cours')), // Ajoutez une app bar
+      appBar: AppBar(title: Text('Cours')), 
       body:Center(
       child: Hero(
         tag: "course-${course.code}",
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: 20.0), // Ajoute un espace horizontal sur les côtés
+              horizontal: 20.0), 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

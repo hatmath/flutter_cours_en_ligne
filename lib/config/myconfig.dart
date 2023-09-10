@@ -6,10 +6,10 @@ import 'mytheme.dart';
 import '../view/mysplashscreen.dart';
 import '../view/myhomepage.dart';
 import '../view/mycoursesview.dart';
-import '../view/mystudentprofileview.dart';
-import '../model/course.dart';
 import '../view/mycoursedetailspage.dart';
 import '../view/mycoursedetailsview.dart';
+import '../view/mystudentprofileview.dart';
+import '../model/course.dart';
 
 enum ClassNames {
   MySplashScreen,
@@ -27,15 +27,6 @@ enum ClassNames {
 
 // MyConfig
 class MyConfig {
-
-  static Future<List<Course>> loadProduits() async {
-    String produitsJsonFilePath = 'assets/data/courses.json';
-    String jsonString = await rootBundle.loadString(produitsJsonFilePath);
-    List<dynamic> jsonList = json.decode(jsonString);
-    List<Course> produits =
-        jsonList.map((data) => Course.fromJson(data)).toList();
-    return produits;
-  }
 
   static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png_transparent.png",code: "");
 
@@ -152,6 +143,16 @@ class MyConfig {
     }
     return monImage;
   }
+
+  static Future<List<Course>> loadProduits() async {
+    String produitsJsonFilePath = 'assets/data/courses.json';
+    String jsonString = await rootBundle.loadString(produitsJsonFilePath);
+    List<dynamic> jsonList = json.decode(jsonString);
+    List<Course> produits =
+        jsonList.map((data) => Course.fromJson(data)).toList();
+    return produits;
+  }
+  
 }
 
 // MyTab
