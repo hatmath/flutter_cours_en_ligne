@@ -49,7 +49,7 @@ void main() {
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
-  Student student1 = Student(
+  final Student student1 = Student(
     firstName: 'John2',
     lastName: 'Doe',
     studentID: '123456',

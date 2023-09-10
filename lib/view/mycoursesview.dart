@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../config/myconfig.dart';
 import '../model/course.dart';
-import 'mycoursedetailspage.dart';
+// import 'mycoursedetailspage.dart';
 
 class MyCoursesView extends StatelessWidget {
   const MyCoursesView({Key? key}) : super(key: key);
