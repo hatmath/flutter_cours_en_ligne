@@ -21,6 +21,7 @@ class _MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTi
 
   @override
   void dispose() {
+    _fadeController.stop();
     _fadeController.dispose(); // Toujours disposer les controllers quand ils ne sont plus utilisés
     super.dispose();
   }

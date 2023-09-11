@@ -31,9 +31,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTicker
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    _fadeController?.stop();
     _fadeController?.dispose();
+    super.dispose();
   }
 
   @override
