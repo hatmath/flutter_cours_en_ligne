@@ -1,4 +1,6 @@
-// run: node importToFirestore.js
+// run:
+// npm install 
+// node importToFirestore.js
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccount.json'); // Remplacez par le chemin vers votre fichier .json
 
