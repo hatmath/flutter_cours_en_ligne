@@ -9,16 +9,6 @@ Future<void> main() async {
   
   if (kIsWeb) {
     print("Flutter Web");    
-    // Votre logique spécifique pour le Web ici
-    // const FirebaseOptions webOption = FirebaseOptions(
-    //   apiKey: "AIzaSyA4u2Z2oiqbOuyNpYWdWcGSqyNDhuK6xFY",
-    //   authDomain: "exercices-flutter.firebaseapp.com",
-    //   projectId: "exercices-flutter",
-    //   storageBucket: "exercices-flutter.appspot.com",
-    //   messagingSenderId: "399288472806",
-    //   appId: "1:399288472806:web:a36ebd644c191217831727",
-    //   measurementId: "G-N4YWPVQQCJ"
-    // );
     const FirebaseOptions webOption = FirebaseOptions(
       apiKey: "AIzaSyDkQco911uDpu-tzwOHOwiOUI3EPy68hP4",
       authDomain: "cours-en-ligne-9a9e7.firebaseapp.com",
