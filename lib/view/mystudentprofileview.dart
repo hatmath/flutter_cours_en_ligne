@@ -119,9 +119,3 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
     super.dispose();
   }
 }
-
-void main() {
-  runApp(const MaterialApp(
-    home: MyStudentProfileView(),
-  ));
-}

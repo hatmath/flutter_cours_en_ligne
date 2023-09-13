@@ -11,6 +11,7 @@ import '../view/mycoursedetailspage.dart';
 import '../view/mycoursedetailsview.dart';
 import '../view/mystudentprofileview.dart';
 import '../model/course.dart';
+import '../view/login.dart';
 
 enum ClassNames {
   MySplashScreen,
@@ -61,6 +62,7 @@ class MyConfig {
   // Définissez ici la liste des pages à afficher dans l'ordre souhaité
   static final List<Widget> pages = [
     MySplashScreen(),
+    LoginPage(),
     MyHomePage(),
     // Ajoutez d'autres pages ici au besoin
   ];
