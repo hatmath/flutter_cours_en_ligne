@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: MyConfig.mainAppTitle,
-      theme: MyTheme.whichThemeOptionToUse(ThemeOption.dark),
+      theme: MyTheme.whichThemeOptionToUse(ThemeOption.light),
       home:PageView(
         // Utilisez la liste de pages de MyConfig
         children: MyConfig.pages,

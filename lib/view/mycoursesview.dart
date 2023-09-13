@@ -18,14 +18,13 @@ class MyCoursesView extends StatelessWidget {
           List<Course> courses = snapshot.data!;
           return ListView.builder(
             padding: EdgeInsets.all(20.0),
-            itemExtent: 70.0,
             itemCount: courses.length,
             itemBuilder: (context, index) {
               return Hero(
                 tag: "course-${courses[index].code}",
                 child: Material(
                   child: ListTile(
-                    title: Text(courses[index].title),
+                    title: Text(courses[index].title, style: Theme.of(context).textTheme.labelSmall),
                     contentPadding: const EdgeInsets.all(10),
                     leading: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(4.0)),

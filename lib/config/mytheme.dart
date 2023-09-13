@@ -1,7 +1,7 @@
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 enum ThemeOption {
   dark,
@@ -52,6 +52,8 @@ class MyTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     useMaterial3: true,    
     // fontFamily: GoogleFonts.notoSans().fontFamily,
+    textTheme: TextTheme(
+      bodySmall: TextStyle(fontSize: 11.0),)
   );
   
   // Uncomment this line if you want to let the device system mode control the theme mode

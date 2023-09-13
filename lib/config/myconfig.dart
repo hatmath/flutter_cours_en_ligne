@@ -31,7 +31,7 @@ enum ClassNames {
 class MyConfig {
 
   static bool assetFromFirebase = false;
-  static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png_transparent.png",code: "");
+  static Course currentCourse =   Course(title: "",description: "",imagePath: "",code: "");
 
   static late TabController tabController;
 
@@ -138,29 +138,32 @@ class MyConfig {
   }
 
   static String getUrlForFirebase(String imageNameAndPath){
-    String replaced = imageNameAndPath.replaceAll('/', '%2F');
-    return 'https://firebasestorage.googleapis.com/v0/b/cours-en-ligne-9a9e7.appspot.com/o/$replaced?alt=media&token=455da142-c24e-409e-9bd2-fc5cb005650a';    
+    String copy = imageNameAndPath;
+    String replaced;
+    if (copy == "") {
+      copy = "images_store/png_transparent.png";      
+    }
+    replaced = copy.replaceAll('/', '%2F');
+    return 'https://firebasestorage.googleapis.com/v0/b/cours-en-ligne-9a9e7.appspot.com/o/$replaced?alt=media&token=455da142-c24e-409e-9bd2-fc5cb005650a';         
   }
 
 
   static Image getImage(String imageNameAndPath, double width) {
-    double myWidth = width;
-    Image monImage =
-        Image.asset("assets/images/png_transparent.png", width: myWidth, fit: BoxFit.cover);
+    String copy =  imageNameAndPath;
     
     if (assetFromFirebase) {
-      imageNameAndPath = getUrlForFirebase(imageNameAndPath);
+      copy = getUrlForFirebase(imageNameAndPath);
     }
 
-    if (imageNameAndPath.contains("http")) {
-      monImage =
-          Image.network(imageNameAndPath, width: myWidth, fit: BoxFit.cover);
-    } else if (imageNameAndPath != "") {
-      monImage =
-          Image.asset(imageNameAndPath, width: myWidth, fit: BoxFit.cover);
+    print(copy);
+
+    if (copy.contains("http")) {
+      return Image.network(copy, width: width, fit: BoxFit.cover);
+    } else if (copy == "") {
+      return Image.asset("assets/images/png_transparent.png", width: width, fit: BoxFit.cover);
+    } else {
+      return Image.asset(copy, width: width, fit: BoxFit.cover);
     }
-    print(imageNameAndPath);
-    return monImage;
   }
 
   static Future<List<Course>> loadProduits() async {
@@ -301,6 +304,8 @@ class MyTabBar extends StatelessWidget {
       controller: tabController,
       indicatorColor: Colors.blue,
       labelColor: Colors.blue,
+      labelStyle: Theme.of(context).textTheme.labelMedium,
+      unselectedLabelStyle: Theme.of(context).textTheme.labelSmall,
       tabs: tabs.map((tab) {
         return Tab(icon: tab.icon, text: tab.text);
       }).toList(),

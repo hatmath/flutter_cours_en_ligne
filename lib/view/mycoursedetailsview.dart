@@ -33,11 +33,11 @@ class _MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTi
       SizedBox(height: 20.0),
       MyConfig.getImage(MyConfig.currentCourse.imagePath, 250),
       SizedBox(height: 10.0),
-      Text(MyConfig.currentCourse.code),
+      Text(MyConfig.currentCourse.code,style: Theme.of(context).textTheme.bodyMedium),
       SizedBox(height: 10.0),
-      Text(MyConfig.currentCourse.title),
+      Text(MyConfig.currentCourse.title,style: Theme.of(context).textTheme.bodyLarge),
       SizedBox(height: 10.0),
-      Text(MyConfig.currentCourse.description),
+      Text(MyConfig.currentCourse.description,style: Theme.of(context).textTheme.bodySmall),
       SizedBox(height: 20.0),
     ];
 
@@ -56,7 +56,7 @@ class _MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTi
                 ),
               );
             },
-            child: Text("Démarrer"),
+            child: Text("Démarrer",style: Theme.of(context).textTheme.labelMedium),
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(
                   horizontal: 20, vertical: 12),

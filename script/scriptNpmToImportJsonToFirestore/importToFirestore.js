@@ -10,7 +10,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-const data = require('./courses_pourfbaseavecstorage.json'); // Remplacez par le chemin vers votre fichier JSON
+const data = require('./courses_pourfbaseavecassets.json'); // Remplacez par le chemin vers votre fichier JSON
 
 const importData = async () => {
   try {

@@ -12,8 +12,7 @@ class MyCoursesViewStore extends StatefulWidget {
 class MyCoursesViewStoreState extends State<MyCoursesViewStore> {
   @override
   Widget build(BuildContext context) {
-    
-    MyConfig.assetFromFirebase = true;
+    MyConfig.assetFromFirebase = false;
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('courses').snapshots(),
@@ -29,14 +28,13 @@ class MyCoursesViewStoreState extends State<MyCoursesViewStore> {
 
         return ListView.builder(
           padding: EdgeInsets.all(20.0),
-          itemExtent: 70.0,
           itemCount: courses.length,
           itemBuilder: (context, index) {
             return Hero(
               tag: "course-${courses[index].get('code')}",
               child: Material(
                 child: ListTile(
-                  title: Text(courses[index].get('title')),
+                  title: Text(courses[index].get('title'),style: Theme.of(context).textTheme.labelSmall),
                   contentPadding: const EdgeInsets.all(10),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(4.0)),
