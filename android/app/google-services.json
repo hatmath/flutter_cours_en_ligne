@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "977641602143",
+    "project_id": "cours-en-ligne-9a9e7",
+    "storage_bucket": "cours-en-ligne-9a9e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977641602143:android:562b418b2e1cedf061efea",
+        "android_client_info": {
+          "package_name": "com.example.flutter_cours_en_ligne"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977641602143-inlra4uo3gobmfco3523qb1s35dtr4jo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSkvuR1L_kXrWwZX3a1pUCr9ThzwaCECE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977641602143-inlra4uo3gobmfco3523qb1s35dtr4jo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

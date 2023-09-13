@@ -3,8 +3,6 @@ import '../config/myconfig.dart';
 import '../model/course.dart';
 // import 'mycoursedetailspage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_core_web/firebase_core_web.dart';
 
 class MyCoursesViewStore extends StatefulWidget {
   @override
@@ -14,6 +12,9 @@ class MyCoursesViewStore extends StatefulWidget {
 class MyCoursesViewStoreState extends State<MyCoursesViewStore> {
   @override
   Widget build(BuildContext context) {
+    
+    MyConfig.assetFromFirebase = true;
+
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('courses').snapshots(),
       builder: (context, snapshot) {

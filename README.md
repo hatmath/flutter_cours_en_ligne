@@ -87,6 +87,7 @@
             
         CRITÈRES DE RÉUSSITE :
 
+            50% Le texte de la liste est trop gros il est tronqué pour l'instant corrigé
             - L’application est adaptée pour un téléphone Android (instructions à venir) 5%
 
             100% - L'application doit démarrer par un écran de splash screen. 10%

@@ -30,6 +30,7 @@ enum ClassNames {
 // MyConfig
 class MyConfig {
 
+  static bool assetFromFirebase = false;
   static Course currentCourse =   Course(title: "",description: "",imagePath: "assets/images/png_transparent.png",code: "");
 
   static late TabController tabController;
@@ -136,10 +137,21 @@ class MyConfig {
     }
   }
 
+  static String getUrlForFirebase(String imageNameAndPath){
+    String replaced = imageNameAndPath.replaceAll('/', '%2F');
+    return 'https://firebasestorage.googleapis.com/v0/b/cours-en-ligne-9a9e7.appspot.com/o/$replaced?alt=media&token=455da142-c24e-409e-9bd2-fc5cb005650a';    
+  }
+
+
   static Image getImage(String imageNameAndPath, double width) {
     double myWidth = width;
     Image monImage =
         Image.asset("assets/images/png_transparent.png", width: myWidth, fit: BoxFit.cover);
+    
+    if (assetFromFirebase) {
+      imageNameAndPath = getUrlForFirebase(imageNameAndPath);
+    }
+
     if (imageNameAndPath.contains("http")) {
       monImage =
           Image.network(imageNameAndPath, width: myWidth, fit: BoxFit.cover);
@@ -147,6 +159,7 @@ class MyConfig {
       monImage =
           Image.asset(imageNameAndPath, width: myWidth, fit: BoxFit.cover);
     }
+    print(imageNameAndPath);
     return monImage;
   }
 

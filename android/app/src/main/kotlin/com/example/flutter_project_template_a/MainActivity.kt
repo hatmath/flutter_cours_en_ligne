@@ -1,4 +1,4 @@
-package com.example.flutter_project_template_a
+package com.example.flutter_cours_en_ligne
 
 import io.flutter.embedding.android.FlutterActivity
 
