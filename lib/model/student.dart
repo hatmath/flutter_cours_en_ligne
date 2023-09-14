@@ -30,6 +30,19 @@ class Student {
     };
   }
 
+  // Factory method to create a Student object from a map
+  factory Student.fromJson(Map<String, dynamic> json) {
+    return Student(
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      studentID: json['studentID'],
+      institutionName: json['institutionName'],
+      email: json['email'],
+      password: json['password'],
+      profilePhoto: json['profilePhoto'],
+    );
+  }
+
   @override
   String toString() {
     return '''
@@ -41,18 +54,4 @@ class Student {
       Profile Photo: $profilePhoto
     ''';
   }
-}
-
-void main() {
-  Student student1 = Student(
-    firstName: 'John',
-    lastName: 'Doe',
-    studentID: '123456',
-    institutionName: 'ABC University',
-    email: 'john.doe@example.com',
-    password: 'password123',
-    profilePhoto: 'profile_image.jpg',
-  );
-
-  print(student1.toString());
 }
