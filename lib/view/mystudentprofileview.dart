@@ -111,7 +111,6 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
                     _buildTextField("Nom de l'institution", currentStudent!.institutionName),
                     _buildTextField("Adresse e-mail", currentStudent!.email),
                     _buildTextField("Mot de passe", currentStudent!.password),
-                    _buildTextField("photo de profil", currentStudent!.profilePhoto),
                     ElevatedButton(
                       onPressed: () {
                         _updateStudentInfo();
@@ -154,9 +153,6 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
                   break;
                 case "Mot de passe":
                   currentStudent!.password = newValue;
-                  break;
-                case "photo de profil":
-                  currentStudent!.profilePhoto = newValue;
                   break;
               }
             });
