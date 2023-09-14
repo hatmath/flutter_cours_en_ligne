@@ -76,35 +76,43 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profil Etudiant')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _studentIDController,
-                    decoration: const InputDecoration(
-                      labelText: 'Entrer ID',
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _studentIDController,
+                      decoration: const InputDecoration(
+                        labelText: 'Entrer ID',
+                      ),
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _loadStudentById(_studentIDController.text);
-                  },
-                  child: const Text('Charger'),
-                ),
-              ],
+                  ElevatedButton(
+                    onPressed: () {
+                      _loadStudentById(_studentIDController.text);
+                    },
+                    child: const Text('Charger'),
+                  ),
+                ],
+              ),
             ),
-          ),
-          if (currentStudent != null)
-            Expanded(
-              child: Padding(
+            if (currentStudent != null)
+              Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: ListView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (currentStudent!.profilePhoto.isNotEmpty)
+                      Image.asset(
+                        'assets/images/${currentStudent!.profilePhoto}',
+                        width: 200,
+                        height: 200,
+                      ),
+                    const SizedBox(height: 12),
                     _buildTextField("Nom", currentStudent!.firstName),
                     _buildTextField("Prénom", currentStudent!.lastName),
                     _buildTextField("Numéro de dossier", currentStudent!.studentID),
@@ -121,8 +129,8 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
                   ],
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login Page')),
+      appBar: AppBar(title: Text('Connection')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Nom d\'utilisateur',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Mot de passe',
                 border: OutlineInputBorder(),
               ),
               obscureText: false,
@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                 ),
-                Text('I accept the conditions'),
+                Text('J\'accepte les conditions d\'utilisation.'),
               ],
             ),
             SizedBox(height: 20),
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                         _passwordController.text,
                       );
                     }
-                  : null, // Disable the button when conditions are not accepted
+                  : null,
               child: Text('Log In'),
             ),
           ],
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Invalid credentials.'),
+          content: Text('Informations invalides'),
           duration: Duration(seconds: 3),
         ),
       );
