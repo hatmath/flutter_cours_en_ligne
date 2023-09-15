@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(width: 8.0),
                 Flexible(
                   child: Text(
-                    'J\'accepte les conditions d\'utilisation.',
+                    'Accepter les conditions.',
                     textAlign: TextAlign.center,
                   ),
                 ),

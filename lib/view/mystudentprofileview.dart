@@ -99,7 +99,6 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
                           decoration: const InputDecoration(
                             labelText: 'Entrer ID etudiant',
                           ),
-                          textDirection: TextDirection.ltr,
                         ),
                       ),
                     ),
