@@ -168,7 +168,7 @@ class MyConfig {
     }
   }
 
-  static Future<List<Course>> loadProduits() async {
+  static Future<List<Course>> loadCourses() async {
     String produitsJsonFilePath = 'assets/data/courses.json';
     String jsonString = await rootBundle.loadString(produitsJsonFilePath);
     List<dynamic> jsonList = json.decode(jsonString);

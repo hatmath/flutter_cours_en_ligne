@@ -9,7 +9,7 @@ class MyCoursesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Course>>(
-      future: MyConfig.loadProduits(),
+      future: MyConfig.loadCourses(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
