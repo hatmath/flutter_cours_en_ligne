@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/student.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import '../config/myconfig.dart';
 
 class MyStudentProfileView extends StatefulWidget {
   const MyStudentProfileView({Key? key}) : super(key: key);
@@ -11,7 +10,6 @@ class MyStudentProfileView extends StatefulWidget {
 }
 
 class MyStudentProfileViewState extends State<MyStudentProfileView> {
-  List<Student> students = [];
   Student? currentStudent;
   TextEditingController _studentIDController = TextEditingController();
   String? updatedFirstName;
@@ -24,30 +22,12 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
   @override
   void initState() {
     super.initState();
-    _loadStudentData();
-  }
-
-  Future<void> _loadStudentData() async {
-    try {
-      final jsonString =
-          await rootBundle.loadString('assets/data/students.json');
-      final jsonData = json.decode(jsonString);
-      final List<Student> loadedStudents = [];
-
-      for (var item in jsonData) {
-        loadedStudents.add(Student.fromJson(item));
-      }
-
-      setState(() {
-        students = loadedStudents;
-      });
-    } catch (e) {
-      print('Error: $e');
-    }
+    for (var item in MyConfig.students) { print(item.toString()); }
   }
 
   void _loadStudentById(String studentId) {
-    final student = students.firstWhere(
+    print('loadbyid');
+    final student = MyConfig.students.firstWhere(
       (element) => element.studentID == studentId,
       orElse: () => Student(
         firstName: '',

@@ -12,6 +12,7 @@ import '../view/mycoursedetailsview.dart';
 import '../view/mystudentprofileview.dart';
 import '../model/course.dart';
 import '../view/login.dart';
+import '../model/student.dart';
 
 enum ClassNames {
   MySplashScreen,
@@ -169,12 +170,24 @@ class MyConfig {
   }
 
   static Future<List<Course>> loadCourses() async {
-    String produitsJsonFilePath = 'assets/data/courses.json';
-    String jsonString = await rootBundle.loadString(produitsJsonFilePath);
+    String coursesJsonFilePath = 'assets/data/courses.json';
+    String jsonString = await rootBundle.loadString(coursesJsonFilePath);
     List<dynamic> jsonList = json.decode(jsonString);
-    List<Course> produits =
+    List<Course> courses =
         jsonList.map((data) => Course.fromJson(data)).toList();
-    return produits;
+    return courses;
+  }
+
+  static List<Student> students = [];
+  
+  static Future<List<Student>> loadStudents() async {
+    String studentsJsonFilePath = 'assets/data/students.json';
+    String jsonString = await rootBundle.loadString(studentsJsonFilePath);
+    List<dynamic> jsonList = json.decode(jsonString);
+    List<Student> students =
+        jsonList.map((data) => Student.fromJson(data)).toList();
+    MyConfig.students = students;
+    return students;
   }
   
 }

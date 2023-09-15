@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_cours_en_ligne_v2/view/myhomepage.dart';
+import '../config/myconfig.dart';
+import '../view/myhomepage.dart';
+import '../model/student.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,47 +13,17 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool acceptedCondition = false;
-  List<Map<String, String>> students = [];
+  // List<Map<String, String>> students = [];
 
   @override
   void initState() {
     super.initState();
-    _loadStudentsData();
+    MyConfig.loadStudents();
   }
 
-  Future<void> _loadStudentsData() async {
-    try {
-      final jsonString = await rootBundle.loadString('assets/data/students.json');
-      final dynamic jsonData = json.decode(jsonString);
-
-      if (jsonData is List<dynamic>) {
-        final List<dynamic> studentsData = jsonData;
-        setState(() {
-          students = studentsData
-              .map((dynamic student) {
-                if (student is Map<String, dynamic> &&
-                    student.containsKey('studentID') &&
-                    student.containsKey('password') &&
-                    student['studentID'] is String &&
-                    student['password'] is String) {
-                  return <String, String>{
-                    'studentID': student['studentID'] as String,
-                    'password': student['password'] as String,
-                  };
-                }
-                return null;
-              })
-              .whereType<Map<String, String>>()
-              .toList();
-        });
-      }
-    } catch (e) {
-      print('Error loading JSON: $e');
-    }
-  }
-
-  Map<String, String> createNewStudent(String studentID, String password) {
-    return {
+  Student createNewStudent(String studentID, String password) {
+    return Student.fromJson(
+    {
       'studentID': studentID,
       'password': password,
       'firstName': '',
@@ -61,12 +31,12 @@ class _LoginPageState extends State<LoginPage> {
       'institutionName': '',
       'email': '',
       'profilePhoto': '',
-    };
+    });
   }
 
   Future<bool> authenticateUser(String studentID, String password) async {
-    for (final Map<String, String> student in students) {
-      if (student['studentID'] == studentID && student['password'] == password) {
+    for (var student in MyConfig.students) {
+      if (student.studentID == studentID && student.password == password) {
         return true;
       }
     }
@@ -183,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (studentID.isNotEmpty && password.isNotEmpty) {
                   final newStudent = createNewStudent(studentID, password);
                   setState(() {
-                    students.add(newStudent);
+                    MyConfig.students.add(newStudent);
                     
                     _studentIDController.clear();
                     _passwordController.clear();
