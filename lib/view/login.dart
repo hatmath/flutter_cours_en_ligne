@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_cours_en_ligne_v2/view/myhomepage.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+//import 'package:path_provider/path_provider.dart';
+//import 'dart:io';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,38 +11,36 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _studentIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool acceptedCondition = false;
-  List<Map<String, String>> users = [];
+  List<Map<String, String>> students = [];
 
   @override
   void initState() {
     super.initState();
-    _loadUsersData();
+    _loadStudentsData();
   }
 
-  Future<void> _loadUsersData() async {
+  Future<void> _loadStudentsData() async {
     try {
-      final jsonString = await rootBundle.loadString('assets/connection.json');
+      final jsonString = await rootBundle.loadString('assets/data/students.json');
       final dynamic jsonData = json.decode(jsonString);
 
-      if (jsonData is Map<String, dynamic> &&
-          jsonData.containsKey('users') &&
-          jsonData['users'] is List<dynamic>) {
-        final List<dynamic> usersData = jsonData['users'];
+      if (jsonData is List<dynamic>) {
+        final List<dynamic> studentsData = jsonData;
         setState(() {
-          users = usersData
-              .map((dynamic user) {
-                if (user is Map<String, dynamic> &&
-                    user.containsKey('username') &&
-                    user.containsKey('password') &&
-                    user['username'] is String &&
-                    user['password'] is String) {
+          students = studentsData
+              .map((dynamic student) {
+                if (student is Map<String, dynamic> &&
+                    student.containsKey('studentID') &&
+                    student.containsKey('password') &&
+                    student['studentID'] is String &&
+                    student['password'] is String) {
                   return <String, String>{
-                    'username': user['username'] as String,
-                    'password': user['password'] as String,
+                    'studentID': student['studentID'] as String,
+                    'password': student['password'] as String,
                   };
                 }
                 return null;
@@ -56,51 +54,17 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _addUser() {
-    final String username = _usernameController.text.trim();
-    final String password = _passwordController.text.trim();
-
-    if (username.isNotEmpty && password.isNotEmpty) {
-      setState(() {
-        users.add({
-          'username': username,
-          'password': password,
-        });
-      });
-
-      _usernameController.clear();
-      _passwordController.clear();
-
-      // Save the updated user data to the JSON file.
-      _saveUserListToJson(users);
-    }
-  }
-
-  Future<void> _saveUserListToJson(List<Map<String, String>> userList) async {
-    final Map<String, dynamic> jsonData = {'users': userList};
-    final jsonString = json.encode(jsonData);
-
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/connection.json');
-
-    try {
-      await file.writeAsString(jsonString);
-    } catch (e) {
-      print('Error saving JSON: $e');
-    }
-  }
-
-  Future<bool> authenticateUser(String username, String password) async {
-    for (final Map<String, String> user in users) {
-      if (user['username'] == username && user['password'] == password) {
+  Future<bool> authenticateUser(String studentID, String password) async {
+    for (final Map<String, String> student in students) {
+      if (student['studentID'] == studentID && student['password'] == password) {
         return true;
       }
     }
     return false;
   }
 
-  Future<void> _loginWithCredentials(String username, String password) async {
-    final isAuthenticated = await authenticateUser(username, password);
+  Future<void> _loginWithCredentials(String studentID, String password) async {
+    final isAuthenticated = await authenticateUser(studentID, password);
 
     if (isAuthenticated) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -119,67 +83,83 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Connection')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _usernameController,
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: Text('Connection')),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: 192,
+            child: TextField(
+              controller: _studentIDController,
               decoration: InputDecoration(
-                labelText: 'Nom d\'utilisateur',
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                labelText: 'Numéro étudiant',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
+          ),
+          SizedBox(height: 20),
+          Container(
+            width: 192,
+            child: TextField(
               controller: _passwordController,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                 labelText: 'Mot de passe',
                 border: OutlineInputBorder(),
               ),
-              obscureText: false,
+              obscureText: true, 
             ),
-            SizedBox(height: 20),
-            Row(
-              children: <Widget>[
-                Radio(
-                  value: true,
-                  groupValue: acceptedCondition,
-                  onChanged: (bool? value) {
-                    if (value != null) {
-                      setState(() {
-                        acceptedCondition = value;
-                      });
-                    }
-                  },
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Radio(
+                    value: true,
+                    groupValue: acceptedCondition,
+                    onChanged: (bool? value) {
+                      if (value != null) {
+                        setState(() {
+                          acceptedCondition = value;
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(width: 8.0),
+              Flexible(
+                child: Text(
+                  'J\'accepte les conditions d\'utilisation.',
+                  textAlign: TextAlign.center,
                 ),
-                Text('J\'accepte les conditions d\'utilisation.'),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: acceptedCondition
-                  ? () {
-                      _loginWithCredentials(
-                        _usernameController.text,
-                        _passwordController.text,
-                      );
-                    }
-                  : null,
-              child: Text('Log In'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _addUser,
-              child: Text('Ajouter un utilisateur'),
-            ),
-          ],
-        ),
+              ),
+            ],
+          )
+,
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: acceptedCondition
+                ? () {
+                    _loginWithCredentials(
+                      _studentIDController.text,
+                      _passwordController.text,
+                    );
+                  }
+                : null,
+            child: Text('Se connecter'),
+          ),
+        ],
       ),
-      key: _scaffoldKey,
-    );
-  }
+    ),
+    key: _scaffoldKey,
+  );
+}
 }

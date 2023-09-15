@@ -57,7 +57,7 @@ class MyTheme {
   );
   
   // Uncomment this line if you want to let the device system mode control the theme mode
-  // static ThemeMode themeMode = ThemeMode.system;
+  static ThemeMode themeMode = ThemeMode.system;
 }
 
 
