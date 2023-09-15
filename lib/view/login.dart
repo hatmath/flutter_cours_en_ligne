@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_cours_en_ligne_v2/view/myhomepage.dart';
-//import 'package:path_provider/path_provider.dart';
-//import 'dart:io';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -54,6 +52,18 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Map<String, String> createNewStudent(String studentID, String password) {
+    return {
+      'studentID': studentID,
+      'password': password,
+      'firstName': '',
+      'lastName': '',
+      'institutionName': '',
+      'email': '',
+      'profilePhoto': '',
+    };
+  }
+
   Future<bool> authenticateUser(String studentID, String password) async {
     for (final Map<String, String> student in students) {
       if (student['studentID'] == studentID && student['password'] == password) {
@@ -61,6 +71,15 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
     return false;
+  }
+
+  void showUserCreatedSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Utilisateur créé avec succès'),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   Future<void> _loginWithCredentials(String studentID, String password) async {
@@ -83,83 +102,101 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(title: Text('Connection')),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 192,
-            child: TextField(
-              controller: _studentIDController,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                labelText: 'Numéro étudiant',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          Container(
-            width: 192,
-            child: TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                labelText: 'Mot de passe',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true, 
-            ),
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Radio(
-                    value: true,
-                    groupValue: acceptedCondition,
-                    onChanged: (bool? value) {
-                      if (value != null) {
-                        setState(() {
-                          acceptedCondition = value;
-                        });
-                      }
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(width: 8.0),
-              Flexible(
-                child: Text(
-                  'J\'accepte les conditions d\'utilisation.',
-                  textAlign: TextAlign.center,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Connection')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 192,
+              child: TextField(
+                controller: _studentIDController,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                  labelText: 'Numéro étudiant',
+                  border: OutlineInputBorder(),
                 ),
               ),
-            ],
-          )
-,
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: acceptedCondition
-                ? () {
-                    _loginWithCredentials(
-                      _studentIDController.text,
-                      _passwordController.text,
-                    );
-                  }
-                : null,
-            child: Text('Se connecter'),
-          ),
-        ],
+            ),
+            SizedBox(height: 20),
+            Container(
+              width: 192,
+              child: TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                  labelText: 'Mot de passe',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Radio(
+                      value: true,
+                      groupValue: acceptedCondition,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() {
+                            acceptedCondition = value;
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(width: 8.0),
+                Flexible(
+                  child: Text(
+                    'J\'accepte les conditions d\'utilisation.',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: acceptedCondition
+                  ? () {
+                      _loginWithCredentials(
+                        _studentIDController.text,
+                        _passwordController.text,
+                      );
+                    }
+                  : null,
+              child: Text('Se connecter'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                final studentID = _studentIDController.text.trim();
+                final password = _passwordController.text.trim();
+
+                if (studentID.isNotEmpty && password.isNotEmpty) {
+                  final newStudent = createNewStudent(studentID, password);
+                  setState(() {
+                    students.add(newStudent);
+                    
+                    _studentIDController.clear();
+                    _passwordController.clear();
+                  });
+                  showUserCreatedSnackbar();
+                }
+              },
+              child: Text('Créer un utilisateur'),
+            ),
+          ],
+        ),
       ),
-    ),
-    key: _scaffoldKey,
-  );
-}
+      key: _scaffoldKey,
+    );
+  }
 }
