@@ -3,11 +3,13 @@ import '../config/myconfig.dart';
 import 'videoplayerscreen.dart';
 
 class MyCourseDetailsView extends StatefulWidget {
+  const MyCourseDetailsView({super.key});
+
   @override
-  _MyCourseDetailsViewState createState() => _MyCourseDetailsViewState();
+  MyCourseDetailsViewState createState() => MyCourseDetailsViewState();
 }
 
-class _MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTickerProviderStateMixin {
+class MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTickerProviderStateMixin {
   late AnimationController _fadeController;
 
   @override
@@ -56,7 +58,6 @@ class _MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTi
                 ),
               );
             },
-            child: Text("Démarrer",style: Theme.of(context).textTheme.labelMedium),
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(
                   horizontal: 20, vertical: 12),
@@ -64,6 +65,7 @@ class _MyCourseDetailsViewState extends State<MyCourseDetailsView> with SingleTi
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
+            child: Text("Démarrer",style: Theme.of(context).textTheme.labelMedium),
           ),
         ),
       );

@@ -5,6 +5,8 @@ import '../model/course.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyCoursesViewStore extends StatefulWidget {
+  const MyCoursesViewStore({super.key});
+
   @override
   MyCoursesViewStoreState createState() => MyCoursesViewStoreState();
 }

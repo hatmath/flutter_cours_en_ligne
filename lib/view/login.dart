@@ -4,11 +4,13 @@ import '../view/myhomepage.dart';
 import '../model/student.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _studentIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -83,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               Text('Étudiant: 12345'),
               Text('Mot de passe: test'),
               SizedBox(height: 20),
-              Container(
+              SizedBox(
                 width: 200,
                 child: TextField(
                   controller: _studentIDController,
@@ -96,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
+              SizedBox(
                 width: 200,
                 child: TextField(
                   controller: _passwordController,

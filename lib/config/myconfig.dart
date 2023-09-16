@@ -189,11 +189,11 @@ class MyConfig {
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore.collection('students').get();
     
     List<Student> students = querySnapshot.docs.map((document) {
-      return Student.fromJson(document.data() as Map<String, dynamic>);
+      return Student.fromJson(document.data());
     }).toList();
 
     MyConfig.students = students;
-    for (var item in MyConfig.students) { print('loadStudentsFromStore:\n' + item.toString()); }
+    for (var item in MyConfig.students) { print('loadStudentsFromStore:\n$item'); }
   }
 
 

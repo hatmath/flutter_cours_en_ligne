@@ -11,7 +11,7 @@ class MyStudentProfileView extends StatefulWidget {
 
 class MyStudentProfileViewState extends State<MyStudentProfileView> {
   late Student currentStudent;
-  TextEditingController _studentIDController = TextEditingController();
+  final TextEditingController _studentIDController = TextEditingController();
   String? updatedFirstName;
   String? updatedLastName;
   String? updatedStudentID;
@@ -45,57 +45,54 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
   }
 
   void _updateStudentInfo() {
-    if (currentStudent != null) {
-      setState(() {
-        currentStudent!.firstName = updatedFirstName ?? currentStudent!.firstName;
-        currentStudent!.lastName = updatedLastName ?? currentStudent!.lastName;
-        currentStudent!.studentID = updatedStudentID ?? currentStudent!.studentID;
-        currentStudent!.institutionName = updatedInstitutionName ?? currentStudent!.institutionName;
-        currentStudent!.email = updatedEmail ?? currentStudent!.email;
-        currentStudent!.password = updatedPassword ?? currentStudent!.password;
-      });
-      MyConfig.saveStudentsToStore();
+    setState(() {
+      currentStudent.firstName = updatedFirstName ?? currentStudent.firstName;
+      currentStudent.lastName = updatedLastName ?? currentStudent.lastName;
+      currentStudent.studentID = updatedStudentID ?? currentStudent.studentID;
+      currentStudent.institutionName = updatedInstitutionName ?? currentStudent.institutionName;
+      currentStudent.email = updatedEmail ?? currentStudent.email;
+      currentStudent.password = updatedPassword ?? currentStudent.password;
+    });
+    MyConfig.saveStudentsToStore();
     }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Profil Etudiant')),
+        appBar: AppBar(title: const Text('Profil Étudiant')),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              if (currentStudent != null)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (currentStudent!.profilePhoto.isNotEmpty)
-                        Image.asset(
-                          'assets/images/${currentStudent!.profilePhoto}',
-                          width: 200,
-                          height: 200,
-                        ),
-                      const SizedBox(height: 12),
-                      _buildTextField("Nom", currentStudent!.firstName),
-                      _buildTextField("Prénom", currentStudent!.lastName),
-                      _buildTextField("Numéro de dossier", currentStudent!.studentID),
-                      _buildTextField("Nom de l'institution", currentStudent!.institutionName),
-                      _buildTextField("Adresse e-mail", currentStudent!.email),
-                      _buildTextField("Mot de passe", currentStudent!.password),
-                      ElevatedButton(
-                        onPressed: () {
-                          _updateStudentInfo();
-                        },
-                        child: const Text('Mise a jour'),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (currentStudent.profilePhoto.isNotEmpty)
+                      Image.asset(
+                        'assets/images/${currentStudent.profilePhoto}',
+                        width: 200,
+                        height: 200,
                       ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
+                    const SizedBox(height: 12),
+                    _buildTextField("Nom", currentStudent.firstName),
+                    _buildTextField("Prénom", currentStudent.lastName),
+                    _buildTextField("Numéro de dossier", currentStudent.studentID),
+                    _buildTextField("Nom de l'institution", currentStudent.institutionName),
+                    _buildTextField("Adresse e-mail", currentStudent.email),
+                    _buildTextField("Mot de passe", currentStudent.password),
+                    ElevatedButton(
+                      onPressed: () {
+                        _updateStudentInfo();
+                      },
+                      child: const Text('Mise a jour'),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                 ),
+              ),
             ],
           ),
         ),
@@ -106,7 +103,7 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
   Widget _buildTextField(String labelText, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Container(
+      child: SizedBox(
         width: 392,
         child: TextField(
           controller: TextEditingController(text: value),

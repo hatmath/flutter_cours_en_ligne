@@ -8,10 +8,10 @@ class VideoPlayerScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  VideoPlayerScreenState createState() => VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTickerProviderStateMixin {
+class VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTickerProviderStateMixin {
   late VideoPlayerController _controller;
   AnimationController? _fadeController;
 
