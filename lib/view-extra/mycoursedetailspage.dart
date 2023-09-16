@@ -29,7 +29,7 @@ class MyCourseDetailsPage extends StatelessWidget {
               SizedBox(height: 10.0),
               Text(course.title,style: Theme.of(context).textTheme.bodyLarge),
               SizedBox(height: 10.0),
-              Text(course.description,style: Theme.of(context).textTheme.bodySmall),
+              Text(course.description,style: Theme.of(context).textTheme.bodyMedium),
               SizedBox(height: 20.0),
             ],
           ),
