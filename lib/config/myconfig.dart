@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'mytheme.dart';
 import '../view/mysplashscreen.dart';
@@ -34,8 +38,9 @@ class MyConfig {
 
   static bool assetFromFirebase = false;
   static Course currentCourse =   Course(title: "",description: "",imagePath: "",code: "");
-
   static late TabController tabController;
+  static List<Student> students = [];
+  static late Student currentStudentLogged; 
 
   // Créez un mappage des noms d'icônes
   static final Map<String, IconData> iconMap = {
@@ -158,7 +163,7 @@ class MyConfig {
       copy = getUrlForFirebase(imageNameAndPath);
     }
 
-    print(copy);
+    print('getImage: $copy');
 
     if (copy.contains("http")) {
       return Image.network(copy, width: width, fit: BoxFit.cover);
@@ -178,8 +183,38 @@ class MyConfig {
     return courses;
   }
 
-  static List<Student> students = [];
-  
+
+  static Future<void> loadStudentsFromStore() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore.collection('students').get();
+    
+    List<Student> students = querySnapshot.docs.map((document) {
+      return Student.fromJson(document.data() as Map<String, dynamic>);
+    }).toList();
+
+    MyConfig.students = students;
+    for (var item in MyConfig.students) { print('loadStudentsFromStore:\n' + item.toString()); }
+  }
+
+
+  static Future<void> saveStudentsToStore() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference studentsCollection = firestore.collection('students');
+
+    // Créez une instance de WriteBatch pour regrouper toutes les opérations
+    WriteBatch batch = firestore.batch();
+
+    for (Student student in MyConfig.students) {
+      DocumentReference docRef = studentsCollection.doc(student.studentID);
+
+      batch.set(docRef, student.toJson()); // utilisez `update` au lieu de `set` si vous voulez uniquement mettre à jour les documents existants
+    }
+
+    // Exécutez toutes les opérations en une seule fois
+    await batch.commit();
+  }
+
+
   static Future<List<Student>> loadStudents() async {
     String studentsJsonFilePath = 'assets/data/students.json';
     String jsonString = await rootBundle.loadString(studentsJsonFilePath);
@@ -189,7 +224,17 @@ class MyConfig {
     MyConfig.students = students;
     return students;
   }
-  
+
+
+  // Ne fonctionne pas car sous Chrome l'accès local est restreint, on doit faire autrement via indexDB, etc
+  static Future<void> saveStudents() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/students.json');
+    List<Map<String, dynamic>> jsonList = 
+        MyConfig.students.map((student) => student.toJson()).toList();     
+    await file.writeAsString(json.encode(jsonList)); 
+  }
+
 }
 
 // MyTab

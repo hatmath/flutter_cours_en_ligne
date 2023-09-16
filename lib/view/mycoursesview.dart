@@ -24,7 +24,7 @@ class MyCoursesView extends StatelessWidget {
                 tag: "course-${courses[index].code}",
                 child: Material(
                   child: ListTile(
-                    title: Text(courses[index].title, style: Theme.of(context).textTheme.labelSmall),
+                    title: Text(courses[index].title, style: Theme.of(context).textTheme.labelMedium),
                     contentPadding: const EdgeInsets.all(10),
                     leading: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(4.0)),

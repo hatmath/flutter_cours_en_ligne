@@ -10,7 +10,7 @@ class MyStudentProfileView extends StatefulWidget {
 }
 
 class MyStudentProfileViewState extends State<MyStudentProfileView> {
-  Student? currentStudent;
+  late Student currentStudent;
   TextEditingController _studentIDController = TextEditingController();
   String? updatedFirstName;
   String? updatedLastName;
@@ -21,12 +21,11 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
 
   @override
   void initState() {
-    super.initState();
-    for (var item in MyConfig.students) { print(item.toString()); }
+    super.initState();   
+    currentStudent = MyConfig.currentStudentLogged; 
   }
 
   void _loadStudentById(String studentId) {
-    print('loadbyid');
     final student = MyConfig.students.firstWhere(
       (element) => element.studentID == studentId,
       orElse: () => Student(
@@ -55,6 +54,7 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
         currentStudent!.email = updatedEmail ?? currentStudent!.email;
         currentStudent!.password = updatedPassword ?? currentStudent!.password;
       });
+      MyConfig.saveStudentsToStore();
     }
   }
 
@@ -67,30 +67,6 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: 200,
-                        child: TextField(
-                          controller: _studentIDController,
-                          decoration: const InputDecoration(
-                            labelText: 'Entrer ID etudiant',
-                          ),
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _loadStudentById(_studentIDController.text);
-                      },
-                      child: const Text('Charger'),
-                    ),
-                  ],
-                ),
-              ),
               if (currentStudent != null)
                 Padding(
                   padding: const EdgeInsets.all(16.0),

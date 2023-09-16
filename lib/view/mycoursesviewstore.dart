@@ -34,7 +34,7 @@ class MyCoursesViewStoreState extends State<MyCoursesViewStore> {
               tag: "course-${courses[index].get('code')}",
               child: Material(
                 child: ListTile(
-                  title: Text(courses[index].get('title'),style: Theme.of(context).textTheme.labelSmall),
+                  title: Text(courses[index].get('title'),style: Theme.of(context).textTheme.labelLarge),
                   contentPadding: const EdgeInsets.all(10),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(4.0)),

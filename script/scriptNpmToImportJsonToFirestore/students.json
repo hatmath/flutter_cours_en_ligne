@@ -1,0 +1,47 @@
+[
+    {
+      "firstName": "Jean",
+      "lastName": "Dupont",
+      "studentID": "12345",
+      "institutionName": "Collège Ahuntsic",
+      "email": "jean.dupont@collegeahuntsic.com",
+      "password": "password123",
+      "profilePhoto": "jean_profile.jpg"
+    },
+    {
+      "firstName": "Marie",
+      "lastName": "Lefebvre",
+      "studentID": "67890",
+      "institutionName": "Collège Ahuntsic",
+      "email": "marie.lefebvre@collegeahuntsic.com",
+      "password": "pass123",
+      "profilePhoto": "marie_profile.jpg"
+    },
+    {
+      "firstName": "Élise",
+      "lastName": "Martin",
+      "studentID": "54321",
+      "institutionName": "Collège Ahuntsic",
+      "email": "elise.martin@collegeahuntsic.com",
+      "password": "elisepass",
+      "profilePhoto": "elise_profile.jpg"
+    },
+    {
+      "firstName": "Pierre",
+      "lastName": "Tremblay",
+      "studentID": "98765",
+      "institutionName": "Collège Ahuntsic",
+      "email": "pierre.tremblay@collegeahuntsic.com",
+      "password": "pierrepass",
+      "profilePhoto": "pierre_profile.jpg"
+    },
+    {
+      "firstName": "Sophie",
+      "lastName": "Gagnon",
+      "studentID": "13579",
+      "institutionName": "Collège Ahuntsic",
+      "email": "sophie.gagnon@collegeahuntsic.com",
+      "password": "sophiepass",
+      "profilePhoto": "sophie_profile.jpg"
+    }
+]

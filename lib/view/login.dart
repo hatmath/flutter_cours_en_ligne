@@ -13,17 +13,15 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool acceptedCondition = false;
-  // List<Map<String, String>> students = [];
 
   @override
   void initState() {
     super.initState();
-    MyConfig.loadStudents();
+    MyConfig.loadStudentsFromStore();
   }
 
   Student createNewStudent(String studentID, String password) {
-    return Student.fromJson(
-    {
+    return Student.fromJson({
       'studentID': studentID,
       'password': password,
       'firstName': '',
@@ -37,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> authenticateUser(String studentID, String password) async {
     for (var student in MyConfig.students) {
       if (student.studentID == studentID && student.password == password) {
+        MyConfig.currentStudentLogged = student;
         return true;
       }
     }
@@ -75,95 +74,103 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Connection')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 192,
-              child: TextField(
-                controller: _studentIDController,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                  labelText: 'Numéro étudiant',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Container(
-              width: 192,
-              child: TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                  labelText: 'Mot de passe',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Radio(
-                      value: true,
-                      groupValue: acceptedCondition,
-                      onChanged: (bool? value) {
-                        if (value != null) {
-                          setState(() {
-                            acceptedCondition = value;
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(width: 8.0),
-                Flexible(
-                  child: Text(
-                    'Accepter les conditions.',
-                    textAlign: TextAlign.center,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 30),
+              Text('Étudiant: 12345'),
+              Text('Mot de passe: test'),
+              SizedBox(height: 20),
+              Container(
+                width: 200,
+                child: TextField(
+                  controller: _studentIDController,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                    labelText: 'Numéro étudiant',
+                    labelStyle: Theme.of(context).textTheme.labelLarge,
+                    border: OutlineInputBorder(),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: acceptedCondition
-                  ? () {
-                      _loginWithCredentials(
-                        _studentIDController.text,
-                        _passwordController.text,
-                      );
-                    }
-                  : null,
-              child: Text('Se connecter'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final studentID = _studentIDController.text.trim();
-                final password = _passwordController.text.trim();
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: 200,
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                    labelText: 'Mot de passe',
+                    labelStyle: Theme.of(context).textTheme.labelLarge,
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Radio(
+                        value: true,
+                        groupValue: acceptedCondition,
+                        onChanged: (bool? value) {
+                          if (value != null) {
+                            setState(() {
+                              acceptedCondition = value;
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 8.0),
+                  Flexible(
+                    child: Text('Accepter les conditions',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelLarge),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: acceptedCondition
+                    ? () {
+                        _loginWithCredentials(
+                          _studentIDController.text,
+                          _passwordController.text,
+                        );
+                      }
+                    : null,
+                child: Text('Se connecter'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final studentID = _studentIDController.text.trim();
+                  final password = _passwordController.text.trim();
 
-                if (studentID.isNotEmpty && password.isNotEmpty) {
-                  final newStudent = createNewStudent(studentID, password);
-                  setState(() {
-                    MyConfig.students.add(newStudent);
-                    
-                    _studentIDController.clear();
-                    _passwordController.clear();
-                  });
-                  showUserCreatedSnackbar();
-                }
-              },
-              child: Text('Créer un utilisateur'),
-            ),
-          ],
+                  if (studentID.isNotEmpty && password.isNotEmpty) {
+                    final newStudent = createNewStudent(studentID, password);
+                    setState(() {
+                      MyConfig.students.add(newStudent);
+                      MyConfig.saveStudentsToStore();
+
+                      _studentIDController.clear();
+                      _passwordController.clear();
+                    });
+                    showUserCreatedSnackbar();
+                  }
+                },
+                child: Text('Créer un utilisateur'),
+              ),
+            ],
+          ),
         ),
       ),
       key: _scaffoldKey,
