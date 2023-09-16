@@ -1,4 +1,3 @@
-
 class Course {
   final String title;
   final String description;
@@ -17,7 +16,7 @@ class Course {
   Course.fromMap(Map<String, dynamic> map)
       : title = map['title'] ?? '',
         description = map['description'] ?? '',
-        imagePath = map['imagePath'] ?? 0, 
+        imagePath = map['imagePath'] ?? 0,
         code = map['code'] ?? '';
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -35,20 +34,14 @@ class Course {
     } else {
       return "code: $code\ntitle: $title\ndescription: $description\nimagePath: $imagePath";
     }
-    
   }
 
   static Course getEmptyCourse() {
     return Course(
-      title: "",
-      description: "",
-      imagePath: "assets/images/png_transparent.png", // Assurez-vous que le chemin est correct
-      code: ""
-    );
+        title: "",
+        description: "",
+        imagePath:
+            "assets/images/png_transparent.png", // Assurez-vous que le chemin est correct
+        code: "");
   }
-
 }
-
-
-
-

@@ -8,12 +8,13 @@ class MyHomePage extends StatefulWidget {
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-
+class MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    MyConfig.tabController = TabController(length: MyConfig.myTabsObjList.length, vsync: this);
+    MyConfig.tabController =
+        TabController(length: MyConfig.myTabsObjList.length, vsync: this);
   }
 
   @override
@@ -30,5 +31,5 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
       bottomNavigationBar: MyConfig.createWidget(ClassNames.MyTabBar),
       // drawer:  MyConfig.createWidget(ClassNames.MyDrawer),
     );
-  } 
+  }
 }

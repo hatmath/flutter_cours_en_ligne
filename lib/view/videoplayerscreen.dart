@@ -11,7 +11,8 @@ class VideoPlayerScreen extends StatefulWidget {
   VideoPlayerScreenState createState() => VideoPlayerScreenState();
 }
 
-class VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTickerProviderStateMixin {
+class VideoPlayerScreenState extends State<VideoPlayerScreen>
+    with SingleTickerProviderStateMixin {
   late VideoPlayerController _controller;
   AnimationController? _fadeController;
 
@@ -23,7 +24,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTickerP
         _controller.play(); // Autoplay when initialized
         setState(() {});
       });
-     _fadeController = AnimationController(
+    _fadeController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
     )..forward();
@@ -40,24 +41,22 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> with SingleTickerP
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Lecture Vidéo"),
-      ),
-      body: FadeTransition(
-        opacity: _fadeController!,
-        child: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 20.0), // espace horizontal sur les côtés
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : CircularProgressIndicator(),
+        appBar: AppBar(
+          title: Text("Lecture Vidéo"),
         ),
-      ),
-    )
-    );
+        body: FadeTransition(
+          opacity: _fadeController!,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: _controller.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                  : CircularProgressIndicator(),
+            ),
+          ),
+        ));
   }
-} 
+}

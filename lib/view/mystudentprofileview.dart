@@ -21,8 +21,8 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
 
   @override
   void initState() {
-    super.initState();   
-    currentStudent = MyConfig.currentStudentLogged; 
+    super.initState();
+    currentStudent = MyConfig.currentStudentLogged;
   }
 
   void _loadStudentById(String studentId) {
@@ -49,12 +49,13 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
       currentStudent.firstName = updatedFirstName ?? currentStudent.firstName;
       currentStudent.lastName = updatedLastName ?? currentStudent.lastName;
       currentStudent.studentID = updatedStudentID ?? currentStudent.studentID;
-      currentStudent.institutionName = updatedInstitutionName ?? currentStudent.institutionName;
+      currentStudent.institutionName =
+          updatedInstitutionName ?? currentStudent.institutionName;
       currentStudent.email = updatedEmail ?? currentStudent.email;
       currentStudent.password = updatedPassword ?? currentStudent.password;
     });
     MyConfig.saveStudentsToStore();
-    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +80,10 @@ class MyStudentProfileViewState extends State<MyStudentProfileView> {
                     const SizedBox(height: 12),
                     _buildTextField("Nom", currentStudent.firstName),
                     _buildTextField("Prénom", currentStudent.lastName),
-                    _buildTextField("Numéro de dossier", currentStudent.studentID),
-                    _buildTextField("Nom de l'institution", currentStudent.institutionName),
+                    _buildTextField(
+                        "Numéro de dossier", currentStudent.studentID),
+                    _buildTextField(
+                        "Nom de l'institution", currentStudent.institutionName),
                     _buildTextField("Adresse e-mail", currentStudent.email),
                     _buildTextField("Mot de passe", currentStudent.password),
                     ElevatedButton(

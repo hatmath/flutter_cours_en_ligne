@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../config/myconfig.dart';
 import '../model/course.dart';
-// import 'mycoursedetailspage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'mycoursedetailspage.dart';
 
 class MyCoursesViewStore extends StatefulWidget {
   const MyCoursesViewStore({super.key});
@@ -36,7 +36,8 @@ class MyCoursesViewStoreState extends State<MyCoursesViewStore> {
               tag: "course-${courses[index].get('code')}",
               child: Material(
                 child: ListTile(
-                  title: Text(courses[index].get('title'),style: Theme.of(context).textTheme.labelLarge),
+                  title: Text(courses[index].get('title'),
+                      style: Theme.of(context).textTheme.labelLarge),
                   contentPadding: const EdgeInsets.all(10),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(4.0)),

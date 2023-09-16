@@ -1,3 +1,5 @@
+// Le package sert de référence globale pour le projet
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,15 +34,14 @@ enum ClassNames {
   MyTabBarView,
 }
 
-
 // MyConfig
 class MyConfig {
-
   static bool assetFromFirebase = false;
-  static Course currentCourse =   Course(title: "",description: "",imagePath: "",code: "");
+  static Course currentCourse =
+      Course(title: "", description: "", imagePath: "", code: "");
   static late TabController tabController;
   static List<Student> students = [];
-  static late Student currentStudentLogged; 
+  static late Student currentStudentLogged;
 
   // Créez un mappage des noms d'icônes
   static final Map<String, IconData> iconMap = {
@@ -60,8 +61,7 @@ class MyConfig {
   ]
   ''';
 
-  static List<MyTab> myTabsObjList =
-      MyTab.parseTabs(myTabsJsonStr, iconMap);
+  static List<MyTab> myTabsObjList = MyTab.parseTabs(myTabsJsonStr, iconMap);
 
   static const String mainAppTitle = "Cours en ligne";
 
@@ -94,7 +94,8 @@ class MyConfig {
 
   static ClassNames? stringToClassNames(String value) {
     try {
-      return ClassNames.values.firstWhere((e) => e.toString() == 'ClassNames.$value');
+      return ClassNames.values
+          .firstWhere((e) => e.toString() == 'ClassNames.$value');
     } catch (e) {
       return null;
     }
@@ -113,16 +114,22 @@ class MyConfig {
       case ClassNames.MyStudentProfileView:
         return MyStudentProfileView();
       case ClassNames.MyAppBar:
-        return MyAppBar(tabController: MyConfig.tabController, tabs: MyConfig.myTabsObjList);
+        return MyAppBar(
+            tabController: MyConfig.tabController,
+            tabs: MyConfig.myTabsObjList);
       case ClassNames.MyDrawer:
-        return MyDrawer(tabController: MyConfig.tabController, tabs: MyConfig.myTabsObjList);
+        return MyDrawer(
+            tabController: MyConfig.tabController,
+            tabs: MyConfig.myTabsObjList);
       case ClassNames.MyTabBar:
-        return MyTabBar(tabController: MyConfig.tabController, tabs: MyConfig.myTabsObjList); 
+        return MyTabBar(
+            tabController: MyConfig.tabController,
+            tabs: MyConfig.myTabsObjList);
       case ClassNames.MyTabBarView:
         return TabBarView(
-        controller: MyConfig.tabController,
-        children: MyConfig.myTabsObjList.map((tab) => tab.content).toList(),
-        );       
+          controller: MyConfig.tabController,
+          children: MyConfig.myTabsObjList.map((tab) => tab.content).toList(),
+        );
       default:
         throw Exception('Type de Widget inconnu: $widgetType');
     }
@@ -145,20 +152,19 @@ class MyConfig {
     }
   }
 
-  static String getUrlForFirebase(String imageNameAndPath){
+  static String getUrlForFirebase(String imageNameAndPath) {
     String copy = imageNameAndPath;
     String replaced;
     if (copy == "") {
-      copy = "images_store/png_transparent.png";      
+      copy = "images_store/png_transparent.png";
     }
     replaced = copy.replaceAll('/', '%2F');
-    return 'https://firebasestorage.googleapis.com/v0/b/cours-en-ligne-9a9e7.appspot.com/o/$replaced?alt=media&token=455da142-c24e-409e-9bd2-fc5cb005650a';         
+    return 'https://firebasestorage.googleapis.com/v0/b/cours-en-ligne-9a9e7.appspot.com/o/$replaced?alt=media&token=455da142-c24e-409e-9bd2-fc5cb005650a';
   }
 
-
   static Image getImage(String imageNameAndPath, double width) {
-    String copy =  imageNameAndPath;
-    
+    String copy = imageNameAndPath;
+
     if (assetFromFirebase) {
       copy = getUrlForFirebase(imageNameAndPath);
     }
@@ -168,7 +174,8 @@ class MyConfig {
     if (copy.contains("http")) {
       return Image.network(copy, width: width, fit: BoxFit.cover);
     } else if (copy == "") {
-      return Image.asset("assets/images/png_transparent.png", width: width, fit: BoxFit.cover);
+      return Image.asset("assets/images/png_transparent.png",
+          width: width, fit: BoxFit.cover);
     } else {
       return Image.asset(copy, width: width, fit: BoxFit.cover);
     }
@@ -183,19 +190,20 @@ class MyConfig {
     return courses;
   }
 
-
   static Future<void> loadStudentsFromStore() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore.collection('students').get();
-    
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await firestore.collection('students').get();
+
     List<Student> students = querySnapshot.docs.map((document) {
       return Student.fromJson(document.data());
     }).toList();
 
     MyConfig.students = students;
-    for (var item in MyConfig.students) { print('loadStudentsFromStore:\n$item'); }
+    for (var item in MyConfig.students) {
+      print('loadStudentsFromStore:\n$item');
+    }
   }
-
 
   static Future<void> saveStudentsToStore() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -207,14 +215,17 @@ class MyConfig {
     for (Student student in MyConfig.students) {
       DocumentReference docRef = studentsCollection.doc(student.studentID);
 
-      batch.set(docRef, student.toJson()); // utilisez `update` au lieu de `set` si vous voulez uniquement mettre à jour les documents existants
+      batch.set(
+          docRef,
+          student
+              .toJson()); // utilisez `update` au lieu de `set` si vous voulez uniquement mettre à jour les documents existants
     }
 
     // Exécutez toutes les opérations en une seule fois
     await batch.commit();
   }
 
-
+  // Sert si on utilise un fichier json local plutôt que firebase
   static Future<List<Student>> loadStudents() async {
     String studentsJsonFilePath = 'assets/data/students.json';
     String jsonString = await rootBundle.loadString(studentsJsonFilePath);
@@ -225,16 +236,14 @@ class MyConfig {
     return students;
   }
 
-
   // Ne fonctionne pas car sous Chrome l'accès local est restreint, on doit faire autrement via indexDB, etc
   static Future<void> saveStudents() async {
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/students.json');
-    List<Map<String, dynamic>> jsonList = 
-        MyConfig.students.map((student) => student.toJson()).toList();     
-    await file.writeAsString(json.encode(jsonList)); 
+    List<Map<String, dynamic>> jsonList =
+        MyConfig.students.map((student) => student.toJson()).toList();
+    await file.writeAsString(json.encode(jsonList));
   }
-
 }
 
 // MyTab
@@ -263,7 +272,8 @@ class MyTab {
               icon: MyIcon.createIconFromClassName(json['icon'], iconMap),
               text: json['text'],
               contentText: json['contentText'],
-              content: MyConfig.createWidget(MyConfig.stringToClassNames(json['content'])!),
+              content: MyConfig.createWidget(
+                  MyConfig.stringToClassNames(json['content'])!),
               tabBarTitle: json['tabBarTitle'],
               appBarTitle: json['appBarTitle'],
               drawerTitle: json['drawerTitle'],
@@ -293,14 +303,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<MyTab> tabs;
 
   const MyAppBar({required this.tabController, required this.tabs, super.key});
-  
+
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
-  Widget build(BuildContext context) {    
-   return AppBar(
-      title: Text(tabs[tabController.index].appBarTitle ?? 'Not configured yet!'), // Le titre est tjr defini par le premier objet MyTab du tableau tabs[] pour l'instant
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(tabs[tabController.index].appBarTitle ??
+          'Not configured yet!'), // Le titre est tjr defini par le premier objet MyTab du tableau tabs[] pour l'instant
       actions: [
         for (int index = 0; index < tabs.length; index++)
           IconButton(
@@ -317,9 +328,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 class MyDrawer extends StatelessWidget {
   final TabController tabController;
   final List<MyTab> tabs;
-  
+
   const MyDrawer({required this.tabController, required this.tabs, super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -355,9 +366,9 @@ class MyDrawer extends StatelessWidget {
 class MyTabBar extends StatelessWidget {
   final TabController tabController;
   final List<MyTab> tabs;
-  
+
   const MyTabBar({required this.tabController, required this.tabs, super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return TabBar(

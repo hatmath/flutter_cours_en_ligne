@@ -86,7 +86,7 @@ class LoginPageState extends State<LoginPage> {
               Text('Mot de passe: test'),
               SizedBox(height: 20),
               SizedBox(
-                width: 200,
+                width: 250,
                 child: TextField(
                   controller: _studentIDController,
                   decoration: InputDecoration(
@@ -99,7 +99,7 @@ class LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                width: 200,
+                width: 250,
                 child: TextField(
                   controller: _passwordController,
                   decoration: InputDecoration(
